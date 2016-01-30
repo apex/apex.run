@@ -90,33 +90,23 @@ body.background-4 #header-overlay {
   }
 }
 
-#content {
-  padding: 100px 0;
-  max-width: 650px;
-  margin: 0 auto;
-}
-
-#menu {
-  position: fixed;
-  top: 35px;
-  right: 35px;
+#more {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -6px;
   color: white;
-  cursor: pointer;
-}
-
-#menu-items {
-  position: fixed;
-  margin: 0;
-  padding: 20px;
-  font-size: 12px;
-  background: white;
-  color: #121212;
-  right: 25px;
-  border-radius: 2px;
-}
-
-#menu-items li {
-  list-style: none;
+  opacity: 0;
+  -webkit-animation-name: move;
+          animation-name: move;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-delay: .75s;
+          animation-delay: .75s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+          animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 @-webkit-keyframes move {
@@ -163,26 +153,17 @@ body.background-4 #header-overlay {
   }
 }
 
-#more {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  margin-left: -6px;
-  color: white;
-  opacity: 0;
-  -webkit-animation-name: move;
-          animation-name: move;
-  -webkit-animation-duration: 3s;
-          animation-duration: 3s;
-  -webkit-animation-delay: .75s;
-          animation-delay: .75s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  -webkit-animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
-          animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+#content {
+  padding: 100px 0;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 #menu {
+  position: fixed;
+  top: 35px;
+  right: 35px;
+  cursor: pointer;
   background: white;
   color: black;
   padding: 7px;
@@ -213,16 +194,16 @@ body.background-4 #header-overlay {
   text-align: right;
 }
 
-#menu-items li a {
-  color: #4C4C4C;
-}
-
 #menu-items li a:hover {
   text-decoration: underline;
 }
 
 #menu-items li {
   list-style: none;
+}
+
+#menu-items li a {
+  color: #4C4C4C;
 }
 
 h1, h2, h3, h4 {
