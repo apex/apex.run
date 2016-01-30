@@ -3,6 +3,8 @@
 
 Apex website.
 
+![Website screenshot](assets/screen.png)
+
 ## Building
 
 Make sure your apex/apex repo is up to date, as this is where the documentation comes from. Then run the following to update index.html:
