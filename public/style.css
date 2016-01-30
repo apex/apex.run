@@ -262,6 +262,7 @@ li > code {
   border-radius: 3px;
   font-size: .75rem;
   color: #555;
+  white-space: nowrap;
 }
 
 header {
