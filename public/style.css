@@ -213,6 +213,10 @@ body.background-4 #header-overlay {
   text-align: right;
 }
 
+#menu-items li a {
+  color: #4C4C4C;
+}
+
 #menu-items li a:hover {
   text-decoration: underline;
 }
