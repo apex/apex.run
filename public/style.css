@@ -243,6 +243,7 @@ h1 ~ h1::before {
 }
 
 h2 {
+  margin-top: 50px;
   font-size: 1.4rem;
 }
 
