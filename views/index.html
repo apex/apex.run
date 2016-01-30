@@ -1,0 +1,9 @@
+{{define "index"}}
+  {{ $path := .Docs }}
+  {{template "header" . }}
+    {{range .Pages}}
+      <h1 id="{{.Name | slug}}">{{.Name}}</h1>
+      {{printf "%s/%s" $path .File | readfile | markdown | noescape}}
+    {{end}}
+  {{template "footer"}}
+{{end}}

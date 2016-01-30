@@ -1,0 +1,33 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Apex – Serverless Infrastructure</title>
+    <meta name="keywords" content="apex, serverless, lambda, aws, aws lambda, functions, golang, go">
+    <meta name="description" content="Apex serverless infrastructure built on AWS Lambda">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="public/style.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="public/syntax.css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <header>
+      <div id="header-overlay"></div>
+      <span id="logo"></span>
+      <div id="menu">
+        <i class="material-icons">menu</i>
+        <ul id="menu-items">
+          {{range .Pages}}
+            <li><a href="#{{.Name | slug}}">{{.Name}}</a></li>
+          {{end}}
+          <li><a href="https://github.com/apex/apex/tree/master/_examples">Examples</a></li>
+          <li><a href="https://github.com/apex/apex">GitHub</a></li>
+        </ul>
+      </div>
+      <span id="more">
+        <i class="material-icons">expand_more</i>
+      </span>
+    </header>
+    <section id="content">
+{{end}}
