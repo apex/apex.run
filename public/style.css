@@ -1,7 +1,9 @@
 
 body {
+  font: 15px/24px "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #4C4C4C;
   margin: 0;
-  font: 15px/1.7 "Open Sans", "Helvetica Neue", "Helvetica", Arial, sans-serif;
 }
 
 #header-overlay {
@@ -10,10 +12,24 @@ body {
   height: 100vh;
   width: 100%;
   opacity: 0;
-  animation-name: overlay;
-  animation-duration: 5s;
-  animation-delay: 1s;
-  animation-fill-mode: forwards;
+  -webkit-animation-name: overlay;
+          animation-name: overlay;
+  -webkit-animation-duration: 5s;
+          animation-duration: 5s;
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes overlay {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: .25;
+  }
 }
 
 @keyframes overlay {
@@ -45,9 +61,22 @@ body.background-4 #header-overlay {
   left: 50%;
   margin-left: -100px;
   margin-top: -60px;
-  animation-name: logo;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
+  -webkit-animation-name: logo;
+          animation-name: logo;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes logo {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes logo {
@@ -62,7 +91,7 @@ body.background-4 #header-overlay {
 
 #content {
   padding: 100px 0;
-  max-width: 700px;
+  max-width: 650px;
   margin: 0 auto;
 }
 
@@ -87,6 +116,28 @@ body.background-4 #header-overlay {
 
 #menu-items li {
   list-style: none;
+}
+
+@-webkit-keyframes move {
+  0% {
+    opacity: 0;
+    bottom: 300px;
+  }
+
+  50% {
+    opacity: 1;
+    bottom: 10px;
+  }
+
+  90% {
+    opacity: 1;
+    bottom: 10px;
+  }
+
+  100% {
+    opacity: 0;
+    bottom: -10px;
+  }
 }
 
 @keyframes move {
@@ -118,11 +169,16 @@ body.background-4 #header-overlay {
   margin-left: -6px;
   color: white;
   opacity: 0;
-  animation-name: move;
-  animation-duration: 3s;
-  animation-delay: .75s;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+  -webkit-animation-name: move;
+          animation-name: move;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-delay: .75s;
+          animation-delay: .75s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+          animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 #menu {
@@ -167,6 +223,7 @@ body.background-4 #header-overlay {
 h1, h2, h3, h4 {
   font-weight: 600;
   margin-bottom: 0px;
+  color: #121212;
 }
 
 h1 {
