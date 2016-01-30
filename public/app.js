@@ -1,6 +1,6 @@
 
 // Backgrounds.
-var backgrounds = [4]
+var backgrounds = [1,2,3,4]
 
 // Highlighting.
 hljs.initHighlighting()
