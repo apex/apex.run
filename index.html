@@ -592,17 +592,9 @@ function.json
 
     
       <h1 id="faq">FAQ</h1>
-      <h2 id="do-i-need-to-compile-go-programs-first">Do I need to compile Go programs first?</h2>
+      <h2 id="how-do-you-manage-multiple-environments">How do you manage multiple environments?</h2>
 
-<p>No, Apex generates a cross-compiled build for you on deploy.</p>
-
-<h2 id="how-do-you-manage-multiple-environments">How do you manage multiple environments?</h2>
-
-<p>It&rsquo;s highly recommended to create separate AWS accounts for staging and production environments. This provides complete isolation of resources, and allows you to easily provide granular access to environments as required. Use the <strong>AWS_PROFILE</strong> environment variable to point to these credentials. For this reason Apex has no notion of an environment.</p>
-
-<h2 id="how-do-you-structure-projects-with-multiple-lambda-functions">How do you structure projects with multiple Lambda functions?</h2>
-
-<p>Apex is project oriented, a project may have zero or more Lambda functions, and must currently live in the &ldquo;functions&rdquo; directory.</p>
+<p>It&rsquo;s highly recommended to create separate AWS accounts for staging and production environments. This provides complete isolation of resources, and allows you to easily provide granular access to environments as required. See <a href="#aws-credentials">AWS credentials</a> for supplying an account profile.</p>
 
 <h2 id="how-is-this-different-than-serverless-com">How is this different than serverless.com?</h2>
 
