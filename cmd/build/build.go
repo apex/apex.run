@@ -77,6 +77,7 @@ var pages = []page{
 	{"Viewing documentation", "docs.md"},
 	{"Upgrading Apex", "upgrade.md"},
 	{"FAQ", "faq.md"},
+	{"Links", "links.md"},
 }
 
 func main() {
