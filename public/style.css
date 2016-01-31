@@ -233,11 +233,10 @@ h1 ~ h1::before {
 
 h2 {
   margin-top: 50px;
-  font-size: 1.4rem;
 }
 
 h3 {
-  font-size: 1.2rem;
+  margin-top: 30px;
 }
 
 p > code,
