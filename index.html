@@ -106,19 +106,7 @@ chmod +x $_
 
 <h2 id="via-aws-files">Via ~/.aws files</h2>
 
-<p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <strong>AWS</strong>PROFILE__ to tell apex which one to reference:</p>
-
-<ul>
-<li><code>AWS_PROFILE</code> profile name to use</li>
-</ul>
-
-<p>If you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with <strong>AWS_REGION</strong>:</p>
-
-<ul>
-<li><code>AWS_REGION</code> AWS region such as &ldquo;us-west-2&rdquo;</li>
-</ul>
-
-<p>To read more on configuring these files view <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
+<p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <code>AWS_PROFILE</code> to tell apex which one to reference. However, if you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with the <code>AWS_REGION</code> environment variable. To read more on configuring these files view <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
 
 <h2 id="via-profile-flag">Via profile flag</h2>
 
