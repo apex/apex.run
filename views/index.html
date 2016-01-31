@@ -1,6 +1,12 @@
 {{define "index"}}
   {{ $path := .Docs }}
   {{template "header" . }}
+    <p>
+      Apex lets you build, deploy, and manage AWS Lambda functions with ease. With Apex you use
+      languages that are not natively supported by AWS Lambda, such as Golang, using a
+      Node.js shim injected into the build transparently, and build hooks to cross-compile
+      for the cloud.
+    </p>
     {{range .Pages}}
       <h1 id="{{.Name | slug}}">{{.Name}}</h1>
       {{printf "%s/%s" $path .File | readfile | markdown | noescape}}
