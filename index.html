@@ -135,33 +135,62 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h2 id="fields">Fields</h2>
 
-<h3 id="name-string-required">name (string, required)</h3>
+<h3 id="name">name</h3>
 
 <p>Name of the project. This field is used in the default value for &ldquo;nameTemplate&rdquo; to prevent collisions between multiple projects.</p>
 
-<h3 id="description-string-optional">description (string, optional)</h3>
+<ul>
+<li>type: <code>string</code></li>
+<li>required</li>
+</ul>
+
+<h3 id="description">description</h3>
 
 <p>Description of the project. This field is informational.</p>
 
-<h3 id="runtime-string-optional">runtime (string, optional)</h3>
+<ul>
+<li>type: <code>string</code></li>
+</ul>
+
+<h3 id="runtime">runtime</h3>
 
 <p>Default runtime of function(s) unless specified in their [[function.json]] configuration.</p>
 
-<h3 id="memory-int-optional">memory (int, optional)</h3>
+<ul>
+<li>type: <code>string</code></li>
+</ul>
+
+<h3 id="memory">memory</h3>
 
 <p>Default memory allocation of function(s) unless specified in their [[function.json]] configuration.</p>
 
-<h3 id="timeout-int-optional">timeout (int, optional)</h3>
+<ul>
+<li>type: <code>int</code></li>
+</ul>
+
+<h3 id="timeout">timeout</h3>
 
 <p>Default timeout of function(s) unless specified in their [[function.json]] configuration.</p>
 
-<h3 id="role-string-optional">role (string, optional)</h3>
+<ul>
+<li>type: <code>int</code></li>
+</ul>
+
+<h3 id="role">role</h3>
 
 <p>Default role of function(s) unless specified in their [[function.json]] configuration.</p>
 
-<h3 id="nametemplate-string-optional">nameTemplate (string, optional)</h3>
+<ul>
+<li>type: <code>string</code></li>
+</ul>
+
+<h3 id="nametemplate">nameTemplate</h3>
 
 <p>Template used to compute the function names. By default the template <code>{{.Project.Name}}_{{.Function.Name}}</code> is used, for example project &ldquo;api&rdquo; and <code>./functions/users</code> becomes &ldquo;api_users&rdquo;. To disable prefixing, use <code>{{.Function.Name}}</code>, which would result in &ldquo;users&rdquo;.</p>
+
+<ul>
+<li>type: <code>string</code></li>
+</ul>
 
     
       <h1 id="structuring-functions">Structuring functions</h1>
@@ -184,25 +213,54 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <p>Fields marked as <code>inherited</code> may be provided in the [[project.json]] file instead.</p>
 
-<h3 id="description-string-optional">description (string, optional)</h3>
+<h3 id="description">description</h3>
 
 <p>Description of the function. This is used as the description in AWS Lambda.</p>
 
-<h3 id="runtime-string-required-inherited">runtime (string, required, inherited)</h3>
+<ul>
+<li>type: <code>string</code></li>
+<li>required</li>
+</ul>
+
+<h3 id="runtime">runtime</h3>
 
 <p>Runtime of the function. This is used as the runtime in AWS Lambda, or when required, is used to determine that the Node.js shim should be used. For example when this field is &ldquo;golang&rdquo;, the canonical runtime used is &ldquo;nodejs&rdquo; and a shim is injected into the zip file.</p>
 
-<h3 id="memory-int-required-inherited">memory (int, required, inherited)</h3>
+<ul>
+<li>type: <code>string</code></li>
+<li>required</li>
+<li>inherited</li>
+</ul>
+
+<h3 id="memory">memory</h3>
 
 <p>Memory allocated to the function, in megabytes.</p>
 
-<h3 id="timeout-int-required-inherited">timeout (int, required, inherited)</h3>
+<ul>
+<li>type: <code>int</code></li>
+<li>required</li>
+<li>inherited</li>
+</ul>
+
+<h3 id="timeout">timeout</h3>
 
 <p>Function timeout in sections.</p>
 
-<h3 id="role-string-required-inherited">role (string, required, inherited)</h3>
+<ul>
+<li>type: <code>int</code></li>
+<li>required</li>
+<li>inherited</li>
+</ul>
+
+<h3 id="role">role</h3>
 
 <p>AWS Lambda role used.</p>
+
+<ul>
+<li>type: <code>string</code></li>
+<li>required</li>
+<li>inherited</li>
+</ul>
 
     
       <h1 id="deploying-functions">Deploying functions</h1>
