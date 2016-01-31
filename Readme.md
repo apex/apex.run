@@ -19,7 +19,7 @@ If you're editing a lot:
 $ watch make
 ```
 
-Commit changes:
+Commit changes, after you make sure to preview the changes in your browser of course :):
 
 ```
 $ make commit
