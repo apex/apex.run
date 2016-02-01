@@ -101,8 +101,8 @@ body.background-4 #header-overlay {
           animation-name: move;
   -webkit-animation-duration: 3s;
           animation-duration: 3s;
-  -webkit-animation-delay: .75s;
-          animation-delay: .75s;
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
   -webkit-animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
