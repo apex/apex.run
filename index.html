@@ -669,6 +669,10 @@ function.json
 
 <p>The shim creates a child process, thus creates a few-hundred millisecond delay for the <em>first</em> invocation. Subsequent calls to a function are likely to hit an active container, unless the function sees very little traffic.</p>
 
+<h2 id="do-shimmed-languages-have-any-limitations">Do shimmed languages have any limitations?</h2>
+
+<p>The shim currently operates using JSON over stdout, because of this you must use stderr for logging.</p>
+
 <h2 id="can-i-manage-functions-that-apex-did-not-create">Can I manage functions that Apex did not create?</h2>
 
 <p>Apex is not designed to handle legacy cases, or functions created by other software. For most operations Apex references the local functions, if it is not defined locally, then you cannot operate against it. This is by-design and is unlikely to change.</p>
