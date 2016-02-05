@@ -47,15 +47,17 @@
           
             <li><a href="#rolling-back-versions">Rolling back versions</a></li>
           
+            <li><a href="#function-hooks">Function hooks</a></li>
+          
             <li><a href="#viewing-log-output">Viewing log output</a></li>
+          
+            <li><a href="#viewing-metrics">Viewing metrics</a></li>
           
             <li><a href="#viewing-build-output">Viewing build output</a></li>
           
             <li><a href="#previewing-with-dry-run">Previewing with dry-run</a></li>
           
             <li><a href="#environment-variables">Environment variables</a></li>
-          
-            <li><a href="#function-hooks">Function hooks</a></li>
           
             <li><a href="#omitting-files">Omitting files</a></li>
           
@@ -466,6 +468,38 @@ $ apex rollback --dry-run uppercase 1
 </code></pre>
 
     
+      <h1 id="function-hooks">Function hooks</h1>
+      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout
+a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before
+a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
+
+<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s
+directory, not the project&rsquo;s directory.</p>
+
+<p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other
+compiled languages.</p>
+
+<h2 id="supported-hooks">Supported hooks</h2>
+
+<ul>
+<li><code>build</code> run during a build (useful for compiling)</li>
+<li><code>deploy</code> run before a deploy (useful for testing, linting)</li>
+<li><code>clean</code> run after a deploy (useful for cleaning up build artifacts)</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<p>Here&rsquo;s the hooks used internally for Golang support.</p>
+
+<pre><code class="language-json">{
+  &quot;hooks&quot;: {
+    &quot;build&quot;: &quot;GOOS=linux GOARCH=amd64 go build -o main main.go&quot;,
+    &quot;clean&quot;: &quot;rm -f main&quot;
+  }
+}
+</code></pre>
+
+    
       <h1 id="viewing-log-output">Viewing log output</h1>
       <p>Apex is integrated with CloudWatch Logs to view the output of functions. By default the logs for all functions will be displayed, unless one or more function names are passed to <code>apex logs</code>. You may also specify the duration of time in which the history is displayed (defaults to 5 minutes), as well as following and filtering results.</p>
 
@@ -499,8 +533,50 @@ $ apex logs -f foo -F error
 
 <p>Output the last hour of logs:</p>
 
-<pre><code class="language-sh">$ apex logs --duration 1h
-$ apex logs -d 1h
+<pre><code class="language-sh">$ apex logs --start 1h
+$ apex logs -s 1h
+</code></pre>
+
+    
+      <h1 id="viewing-metrics">Viewing metrics</h1>
+      <p>The <code>apex metrics</code> command provides a quick glance at the overall metrics for your functions, displaying the number of invocations, total execution duration, throttling, and errors within a given time period.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>View all function metrics within the last 24 hours:</p>
+
+<pre><code class="language-sh">$ apex metrics
+
+uppercase
+  invocations: 1242
+  duration: 65234ms
+  throttles: 0
+  error: 0
+
+lowercase
+  invocations: 1420
+  duration: 65234ms
+  throttles: 0
+  error: 5
+
+</code></pre>
+
+<p>View metrics for the last 15 minutes:</p>
+
+<pre><code class="language-sh">$ apex metrics --start 5m
+
+uppercase
+  invocations: 16
+  duration: 4212ms
+  throttles: 0
+  error: 0
+
+lowercase
+  invocations: 23
+  duration: 5200ms
+  throttles: 0
+  error: 5
+
 </code></pre>
 
     
@@ -615,38 +691,6 @@ $ apex logs -d 1h
 <pre><code class="language-json">{
   &quot;environment&quot;: {
     &quot;LOGGLY_TOKEN&quot;: &quot;12314212213123&quot;
-  }
-}
-</code></pre>
-
-    
-      <h1 id="function-hooks">Function hooks</h1>
-      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout
-a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before
-a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
-
-<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s
-directory, not the project&rsquo;s directory.</p>
-
-<p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other
-compiled languages.</p>
-
-<h2 id="supported-hooks">Supported hooks</h2>
-
-<ul>
-<li><code>build</code> run during a build (useful for compiling)</li>
-<li><code>deploy</code> run before a deploy (useful for testing, linting)</li>
-<li><code>clean</code> run after a deploy (useful for cleaning up build artifacts)</li>
-</ul>
-
-<h2 id="examples">Examples</h2>
-
-<p>Here&rsquo;s the hooks used internally for Golang support.</p>
-
-<pre><code class="language-json">{
-  &quot;hooks&quot;: {
-    &quot;build&quot;: &quot;GOOS=linux GOARCH=amd64 go build -o main main.go&quot;,
-    &quot;clean&quot;: &quot;rm -f main&quot;
   }
 }
 </code></pre>
