@@ -55,6 +55,8 @@
           
             <li><a href="#environment-variables">Environment variables</a></li>
           
+            <li><a href="#function-hooks">Function hooks</a></li>
+          
             <li><a href="#omitting-files">Omitting files</a></li>
           
             <li><a href="#understanding-the-shim">Understanding the shim</a></li>
@@ -135,8 +137,8 @@ all <code>apex(1)</code> operations have access to these functions.</p>
 
 <h2 id="configuration">Configuration</h2>
 
-<p>Projects <strong>MUST</strong> have a project.json file in the root directory. This file contains details about your project, as well as
-defaults for functions, if desired. Here&rsquo;s an example of a project.json file declaring a default AWS IAM &ldquo;role&rdquo; and &ldquo;memory&rdquo; for <em>all</em> functions.</p>
+<p>Projects must have a project.json file in the root directory. This file contains details about your project, as well as
+defaults for functions, if desired. Here&rsquo;s an example of a project.json file declaring a default AWS IAM &ldquo;role&rdquo; and &ldquo;memory&rdquo; for all functions.</p>
 
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;node&quot;,
@@ -167,7 +169,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h3 id="runtime">runtime</h3>
 
-<p>Default runtime of function(s) unless specified in their [[function.json]] configuration.</p>
+<p>Default runtime of function(s) unless specified in their function.json configuration.</p>
 
 <ul>
 <li>type: <code>string</code></li>
@@ -175,7 +177,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h3 id="memory">memory</h3>
 
-<p>Default memory allocation of function(s) unless specified in their [[function.json]] configuration.</p>
+<p>Default memory allocation of function(s) unless specified in their function.json configuration.</p>
 
 <ul>
 <li>type: <code>int</code></li>
@@ -183,7 +185,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h3 id="timeout">timeout</h3>
 
-<p>Default timeout of function(s) unless specified in their [[function.json]] configuration.</p>
+<p>Default timeout of function(s) unless specified in their function.json configuration.</p>
 
 <ul>
 <li>type: <code>int</code></li>
@@ -191,7 +193,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h3 id="role">role</h3>
 
-<p>Default role of function(s) unless specified in their [[function.json]] configuration.</p>
+<p>Default role of function(s) unless specified in their function.json configuration.</p>
 
 <ul>
 <li>type: <code>string</code></li>
@@ -209,7 +211,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
       <h1 id="structuring-functions">Structuring functions</h1>
       <p>A function is the smallest unit in Apex. A function represents an AWS Lambda function.</p>
 
-<p>Functions <strong>MUST</strong> include at least one source file (runtime dependent), such as index.js or main.go. Optionally a function.json file may be placed in the <em>function&rsquo;s directory</em>, specifying details such as the memory allocated or the AWS IAM role. If one or more functions is missing a function.json file you <strong>MUST</strong> provide defaults for the required fields in project.json (see &ldquo;Projects&rdquo; for an example).</p>
+<p>Functions must include at least one source file (runtime dependent), such as index.js or main.go. Optionally a function.json file may be placed in the <em>function&rsquo;s directory</em>, specifying details such as the memory allocated or the AWS IAM role. If one or more functions is missing a function.json file you must provide defaults for the required fields in project.json (see &ldquo;Projects&rdquo; for an example).</p>
 
 <h2 id="configuration">Configuration</h2>
 
@@ -224,7 +226,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h2 id="fields">Fields</h2>
 
-<p>Fields marked as <code>inherited</code> may be provided in the [[project.json]] file instead.</p>
+<p>Fields marked as <code>inherited</code> may be provided in the project.json file instead.</p>
 
 <h3 id="description">description</h3>
 
@@ -618,6 +620,38 @@ $ apex logs -d 1h
 </code></pre>
 
     
+      <h1 id="function-hooks">Function hooks</h1>
+      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout
+a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before
+a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
+
+<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s
+directory, not the project&rsquo;s directory.</p>
+
+<p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other
+compiled languages.</p>
+
+<h2 id="supported-hooks">Supported hooks</h2>
+
+<ul>
+<li><code>build</code> run during a build (useful for compiling)</li>
+<li><code>deploy</code> run before a deploy (useful for testing, linting)</li>
+<li><code>clean</code> run after a deploy (useful for cleaning up build artifacts)</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<p>Here&rsquo;s the hooks used internally for Golang support.</p>
+
+<pre><code class="language-json">{
+  &quot;hooks&quot;: {
+    &quot;build&quot;: &quot;GOOS=linux GOARCH=amd64 go build -o main main.go&quot;,
+    &quot;clean&quot;: &quot;rm -f main&quot;
+  }
+}
+</code></pre>
+
+    
       <h1 id="omitting-files">Omitting files</h1>
       <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://www.gnu.org/software/findutils/manual/html_node/find_html/Shell-Pattern-Matching.html">shell pattern matching</a>; all patterns defined, are relative to function directories and not the project itself.</p>
 
@@ -626,7 +660,6 @@ $ apex logs -d 1h
 <p>Here&rsquo;s an example ignoring go source files and the function.json itself:</p>
 
 <pre><code>*.go
-function.json
 </code></pre>
 
     
@@ -640,7 +673,7 @@ function.json
 <h2 id="tips">Tips</h2>
 
 <ul>
-<li>Type <code>/</code> and search keyword, and press enter to search the document</li>
+<li>Type <code>/</code> and search a keyword, and press enter to search the document</li>
 <li>Type <code>n</code> to view the next occurrence of your query<br /></li>
 <li>Type <code>u</code> to page up</li>
 <li>Type <code>d</code> to page down</li>
@@ -657,17 +690,19 @@ function.json
 
 <p>It&rsquo;s highly recommended to create separate AWS accounts for staging and production environments. This provides complete isolation of resources, and allows you to easily provide granular access to environments as required. See <a href="#aws-credentials">AWS credentials</a> for supplying an account profile.</p>
 
-<h2 id="how-is-this-different-than-serverless-com">How is this different than serverless.com?</h2>
+<h2 id="how-is-this-different-than-serverless">How is this different than Serverless?</h2>
 
 <p>Serverless uses CloudFormation to bootstrap resources, which can be great for getting started, but is generally less robust than <a href="https://github.com/apex/boilerplate">Terraform</a> for managing infrastructure throughout its lifetime. For this reason Apex does not currently provide resource management. This may change in the future for light bootstrapping, likely in an optional form.</p>
 
 <p>At the time of writing Serverless does not support shimming for languages which are not supported natively by Lambda, such as Golang. Apex does this for you out of the box.</p>
 
+<p>The structures imposed by each project are different, as well as varying features, see the documentation for each project to see what either supports.</p>
+
 <p>Serverless is written using Node.js, Apex is written in Go.</p>
 
 <h2 id="is-using-the-node-js-shim-slow">Is using the Node.js shim slow?</h2>
 
-<p>The shim creates a child process, thus creates a few-hundred millisecond delay for the <em>first</em> invocation. Subsequent calls to a function are likely to hit an active container, unless the function sees very little traffic.</p>
+<p>The shim creates a child process, thus creates a few-hundred millisecond delay for the first invocation. Subsequent calls to a function are likely to hit an active container, unless the function sees very little traffic.</p>
 
 <h2 id="do-shimmed-languages-have-any-limitations">Do shimmed languages have any limitations?</h2>
 

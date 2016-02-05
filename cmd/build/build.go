@@ -72,6 +72,7 @@ var pages = []page{
 	{"Viewing build output", "build.md"},
 	{"Previewing with dry-run", "dryrun.md"},
 	{"Environment variables", "env.md"},
+	{"Function hooks", "hooks.md"},
 	{"Omitting files", "ignore.md"},
 	{"Understanding the shim", "shim.md"},
 	{"Viewing documentation", "docs.md"},
