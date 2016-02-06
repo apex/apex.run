@@ -53,8 +53,6 @@
           
             <li><a href="#viewing-metrics">Viewing metrics</a></li>
           
-            <li><a href="#viewing-build-output">Viewing build output</a></li>
-          
             <li><a href="#previewing-with-dry-run">Previewing with dry-run</a></li>
           
             <li><a href="#environment-variables">Environment variables</a></li>
@@ -577,17 +575,6 @@ lowercase
   throttles: 0
   error: 5
 
-</code></pre>
-
-    
-      <h1 id="viewing-build-output">Viewing build output</h1>
-      <p>Apex generates a zip file for you upon deploy, however sometimes it can be useful to see exactly what&rsquo;s included in this file for debugging purposes. The <code>apex build</code> command outputs the zip to STDOUT for this purpose.</p>
-
-<h2 id="examples">Examples</h2>
-
-<p>Output zip to out.zip:</p>
-
-<pre><code class="language-sh">$ apex build foo &gt; out.zip
 </code></pre>
 
     

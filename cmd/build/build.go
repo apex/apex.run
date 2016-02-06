@@ -71,7 +71,6 @@ var pages = []page{
 	{"Function hooks", "hooks.md"},
 	{"Viewing log output", "logs.md"},
 	{"Viewing metrics", "metrics.md"},
-	{"Viewing build output", "build.md"},
 	{"Previewing with dry-run", "dryrun.md"},
 	{"Environment variables", "env.md"},
 	{"Omitting files", "ignore.md"},
