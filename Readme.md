@@ -1,7 +1,7 @@
 
 # web
 
-Apex website.
+Apex website. If you'd like to contribute or fix typos, please edit the [Apex markdown docs](https://github.com/apex/apex/tree/master/docs), the contents of this repo are generated from these.
 
 ![Website screenshot](assets/screen.png)
 
