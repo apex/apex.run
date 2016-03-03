@@ -88,19 +88,14 @@
     </p>
     
       <h1 id="installation">Installation</h1>
-      <p>Download <a href="https://github.com/apex/apex/releases">binaries</a> for your platform, or if you&rsquo;re on OSX grab the latest release with:</p>
+      <p>On OS X or Linux:</p>
 
-<pre><code class="language-sh">latest=$(curl -s https://api.github.com/repos/apex/apex/tags | grep name | head -n 1 | sed 's/[,&quot; ]//g' | cut -d ':' -f 2)
-curl -sL https://github.com/apex/apex/releases/download/$latest/apex_darwin_amd64 -o /usr/local/bin/apex
-chmod +x $_
+<pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
 </code></pre>
 
-<p>Install from master with <code>go-get</code>:</p>
+<p>On Windows download <a href="https://github.com/apex/apex/releases">binary</a>.</p>
 
-<pre><code>go get github.com/apex/apex/cmd/apex
-</code></pre>
-
-<p>Upgrade to the latest release:</p>
+<p>If already installed, upgrade with:</p>
 
 <pre><code>apex upgrade
 </code></pre>
@@ -207,6 +202,38 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 <li>type: <code>string</code></li>
 </ul>
 
+<h3 id="retainedversions">retainedVersions</h3>
+
+<p>Default number of retained function&rsquo;s versions on AWS Lambda unless specified in their function.json configuration.</p>
+
+<ul>
+<li>type: <code>int</code></li>
+</ul>
+
+<h3 id="vpc">vpc</h3>
+
+<p>Default VPC configuration of function(s) unless specified in their function.json configuration.</p>
+
+<ul>
+<li>type: <code>object</code></li>
+</ul>
+
+<h4 id="vpc-securitygroups">vpc.securityGroups</h4>
+
+<p>List of security groups IDs</p>
+
+<ul>
+<li>type: <code>array</code></li>
+</ul>
+
+<h4 id="vpc-subnets">vpc.subnets</h4>
+
+<p>List of subnets IDs</p>
+
+<ul>
+<li>type: <code>array</code></li>
+</ul>
+
     
       <h1 id="structuring-functions">Structuring functions</h1>
       <p>A function is the smallest unit in Apex. A function represents an AWS Lambda function.</p>
@@ -277,11 +304,50 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 <li>inherited</li>
 </ul>
 
+<h3 id="retainedversions">retainedVersions</h3>
+
+<p>Number of retained function&rsquo;s versions on AWS Lambda. If not specified <code>deploy</code> command will leave 10 versions.</p>
+
+<ul>
+<li>type: <code>int</code></li>
+<li>inherited</li>
+</ul>
+
+<h3 id="vpc">vpc</h3>
+
+<p>If your function needs to access resources in a VPC security groups and subnets have to be provided. You must provide at least one security group and one subnet.</p>
+
+<ul>
+<li>type: <code>object</code></li>
+<li>inherited</li>
+</ul>
+
+<h4 id="vpc-securitygroups">vpc.securityGroups</h4>
+
+<p>List of security groups IDs</p>
+
+<ul>
+<li>type: <code>array</code></li>
+<li>inherited</li>
+</ul>
+
+<h4 id="vpc-subnets">vpc.subnets</h4>
+
+<p>List of subnets IDs</p>
+
+<ul>
+<li>type: <code>array</code></li>
+<li>inherited</li>
+</ul>
+
     
       <h1 id="deploying-functions">Deploying functions</h1>
       <p>To deploy one or more functions all you need to do is run <code>apex deploy</code>. Apex deploys are idempotent; a build is created
 for each function, and Apex performs a checksum to see if the deployed function matches the local build, if so
 it&rsquo;s not deployed.</p>
+
+<p>After deploy Apex will cleanup old function&rsquo;s versions stored on AWS Lambda leaving only few. Number of retained versions
+can be specified in project or function configuration.</p>
 
 <p>If you prefer to be explicit you can pass one or more function names to <code>apex deploy</code>.</p>
 
@@ -374,7 +440,7 @@ REPORT RequestId: 30f51e67-a6b5-11e5-8929-f53378ef0f47	Duration: 0.22 ms	Billed 
 
   bar
     runtime: nodejs
-    memory: 128md
+    memory: 128mb
     timeout: 5s
     role: arn:aws:iam::293503197324:role/lambda
     handler: index.handle
@@ -382,7 +448,7 @@ REPORT RequestId: 30f51e67-a6b5-11e5-8929-f53378ef0f47	Duration: 0.22 ms	Billed 
 
   foo
     runtime: nodejs
-    memory: 512md
+    memory: 512mb
     timeout: 10s
     role: arn:aws:iam::293503197324:role/lambda
     handler: index.handle
@@ -561,7 +627,7 @@ lowercase
 
 <p>View metrics for the last 15 minutes:</p>
 
-<pre><code class="language-sh">$ apex metrics --start 5m
+<pre><code class="language-sh">$ apex metrics --start 15m
 
 uppercase
   invocations: 16
@@ -684,7 +750,7 @@ lowercase
 
     
       <h1 id="omitting-files">Omitting files</h1>
-      <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://www.gnu.org/software/findutils/manual/html_node/find_html/Shell-Pattern-Matching.html">shell pattern matching</a>; all patterns defined, are relative to function directories and not the project itself.</p>
+      <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://git-scm.com/docs/gitignore#_pattern_format">.gitignore pattern format</a>; all patterns defined, are relative to function directories and not the project itself. By default both <code>.apexignore</code> and <code>function.json</code> are ignored.</p>
 
 <h2 id="example">Example</h2>
 
@@ -705,10 +771,10 @@ lowercase
 
 <ul>
 <li>Type <code>/</code> and search a keyword, and press enter to search the document</li>
-<li>Type <code>n</code> to view the next occurrence of your query<br /></li>
+<li>Type <code>n</code> to view the next occurrence of your query</li>
 <li>Type <code>u</code> to page up</li>
 <li>Type <code>d</code> to page down</li>
-<li>Type <code>d</code> to exit</li>
+<li>Type <code>q</code> to exit</li>
 </ul>
 
     
