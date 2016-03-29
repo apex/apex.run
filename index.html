@@ -195,6 +195,14 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 <li>type: <code>string</code></li>
 </ul>
 
+<h3 id="environment">environment</h3>
+
+<p>Default environment variables of function(s) unless specified in their function.json configuration.</p>
+
+<ul>
+<li>type: <code>object</code></li>
+</ul>
+
 <h3 id="nametemplate">nameTemplate</h3>
 
 <p>Template used to compute the function names. By default the template <code>{{.Project.Name}}_{{.Function.Name}}</code> is used, for example project &ldquo;api&rdquo; and <code>./functions/users</code> becomes &ldquo;api_users&rdquo;. To disable prefixing, use <code>{{.Function.Name}}</code>, which would result in &ldquo;users&rdquo;.</p>
@@ -302,6 +310,15 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 <ul>
 <li>type: <code>string</code></li>
 <li>required</li>
+<li>inherited</li>
+</ul>
+
+<h3 id="environment">environment</h3>
+
+<p>Environment variables.</p>
+
+<ul>
+<li>type: <code>object</code></li>
 <li>inherited</li>
 </ul>
 
@@ -598,7 +615,7 @@ $ apex logs -f foo -F error
 
 <p>Output the last hour of logs:</p>
 
-<pre><code class="language-sh">$ apex logs --start 1h
+<pre><code class="language-sh">$ apex logs --since 1h
 $ apex logs -s 1h
 </code></pre>
 
@@ -628,7 +645,7 @@ lowercase
 
 <p>View metrics for the last 15 minutes:</p>
 
-<pre><code class="language-sh">$ apex metrics --start 15m
+<pre><code class="language-sh">$ apex metrics --since 15m
 
 uppercase
   invocations: 16
@@ -726,18 +743,18 @@ lowercase
       <h1 id="environment-variables">Environment variables</h1>
       <p>AWS Lambda does not support environment variables out of the box, so this is a feature provided by Apex.</p>
 
-<p>The <code>-e, --env</code> flag allows you to define environment variables which are exposed to the function at runtime. For example in Node.js using <code>process.env.NAME</code> or in Go using <code>os.Getenv(&quot;NAME&quot;)</code>. Behind the scenes this generates a <code>.env.json</code> file which is injected into your function&rsquo;s zip file upon deploy. You may use this flag multiple times.</p>
+<p>The <code>-s, --set</code> flag allows you to set environment variables which are exposed to the function at runtime. For example in Node.js using <code>process.env.NAME</code> or in Go using <code>os.Getenv(&quot;NAME&quot;)</code>. Behind the scenes this generates a <code>.env.json</code> file which is injected into your function&rsquo;s zip file upon deploy. You may use this flag multiple times.</p>
 
 <h2 id="examples">Examples</h2>
 
-<p>For example suppose you had a loggly log collector and it needs an API token, you might deploy with:</p>
+<p>For example suppose you had a Loggly log collector and it needs an API token, you might deploy with:</p>
 
-<pre><code>$ apex deploy -e LOGGLY_TOKEN=token log-collector
+<pre><code>$ apex deploy -s LOGGLY_TOKEN=token log-collector
 </code></pre>
 
 <p>Or suppose you have multiple functions using the GitHub API, you may want to expose a token to all of them:</p>
 
-<pre><code>$ apex deploy -e GITHUB_TOKEN=token
+<pre><code>$ apex deploy -s GITHUB_TOKEN=token
 </code></pre>
 
 <p>Specify environment variables in project.json or function.json:</p>
