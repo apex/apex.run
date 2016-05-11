@@ -31,6 +31,8 @@
           
             <li><a href="#aws-credentials">AWS credentials</a></li>
           
+            <li><a href="#autocomplete">Autocomplete</a></li>
+          
             <li><a href="#structuring-projects">Structuring projects</a></li>
           
             <li><a href="#structuring-functions">Structuring functions</a></li>
@@ -125,6 +127,21 @@
 <p>If you have both ~/.aws/credentials and ~/.aws/config you may specify the profile directly with <code>apex --profile &lt;name&gt;</code> when issuing commands. This means you do not have to specify any environment variables, however you must provide it with each operation:</p>
 
 <pre><code>$ apex --profile myapp-prod deploy
+</code></pre>
+
+    
+      <h1 id="autocomplete">Autocomplete</h1>
+      <p>Apex supports command and function name autocompletion. To enable this functionality you&rsquo;ll need to add the following shell script to your profile or similar:</p>
+
+<pre><code class="language-sh">_apex()  {
+  COMPREPLY=()
+  local cur=&quot;${COMP_WORDS[COMP_CWORD]}&quot;
+  local opts=&quot;$(apex autocomplete -- ${COMP_WORDS[@]:1})&quot;
+  COMPREPLY=( $(compgen -W &quot;${opts}&quot; -- ${cur}) )
+  return 0
+}
+
+complete -F _apex apex
 </code></pre>
 
     
@@ -376,7 +393,7 @@ it&rsquo;s not deployed.</p>
 <p>After deploy Apex will cleanup old function&rsquo;s versions stored on AWS Lambda leaving only few. Number of retained versions
 can be specified in project or function configuration.</p>
 
-<p>If you prefer to be explicit you can pass one or more function names to <code>apex deploy</code>.</p>
+<p>If you prefer to be explicit you can pass one or more function names to <code>apex deploy</code>. You may also perform shell-style globbing matches with any command accepting function names, such as <code>deploy</code>, <code>logs</code>, and <code>rollback</code>.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -394,6 +411,16 @@ can be specified in project or function configuration.</p>
 
 <pre><code class="language-sh">$ apex deploy auth
 $ apex deploy auth api
+</code></pre>
+
+<p>Deploy all functions which name starts with &ldquo;auth&rdquo;:</p>
+
+<pre><code class="language-sh">$ apex deploy auth*
+</code></pre>
+
+<p>Deploy all functions ending with &ldquo;_reporter&rdquo;.</p>
+
+<pre><code class="language-sh">$ apex deploy *_reporter
 </code></pre>
 
     
@@ -516,6 +543,11 @@ Are you sure? (yes/no):
 <pre><code class="language-sh">$ apex delete -f foo bar
 </code></pre>
 
+<p>Delete all functions which name starts with &ldquo;auth&rdquo;:</p>
+
+<pre><code class="language-sh">$ apex delete auth*
+</code></pre>
+
     
       <h1 id="building-functions">Building functions</h1>
       <p>Apex generates a zip file for you upon deploy, however sometimes it can be useful to see exactly what&rsquo;s included in this file for debugging purposes. The <code>apex build</code> command outputs the zip to STDOUT for this purpose.</p>
@@ -560,15 +592,11 @@ $ apex rollback --dry-run uppercase 1
 
     
       <h1 id="function-hooks">Function hooks</h1>
-      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout
-a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before
-a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
+      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
 
-<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s
-directory, not the project&rsquo;s directory.</p>
+<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s directory, not the project&rsquo;s directory.</p>
 
-<p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other
-compiled languages.</p>
+<p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other compiled languages.</p>
 
 <h2 id="supported-hooks">Supported hooks</h2>
 
@@ -626,6 +654,11 @@ $ apex logs -f foo -F error
 
 <pre><code class="language-sh">$ apex logs --since 1h
 $ apex logs -s 1h
+</code></pre>
+
+<p>Log all functions which name starts with &ldquo;auth&rdquo;:</p>
+
+<pre><code class="language-sh">$ apex logs auth*
 </code></pre>
 
     
