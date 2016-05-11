@@ -162,6 +162,10 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 }
 </code></pre>
 
+<h2 id="symlinks">Symlinks</h2>
+
+<p>It&rsquo;s important to note that Apex supports symlinked files and directories. Apex will read the links and pull in these files, even if the links aren&rsquo;t to files within your function. This enables the use of <code>npm link</code>, shared configuration and so on.</p>
+
 <h2 id="fields">Fields</h2>
 
 <h3 id="name">name</h3>
