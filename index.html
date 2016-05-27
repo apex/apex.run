@@ -853,6 +853,10 @@ lowercase
 
 <p>AWS IAM roles can be used to provide quick access to each environment using a drop-down in the AWS Console.</p>
 
+<h2 id="can-i-test-functions-locally">Can I test functions locally?</h2>
+
+<p>Currently there is no way to run functions locally, it would be a very large task to emulate the AWS. We recommend writing the bulk of your logic as libraries or packages native to your chosen language, using only thing connective layers in the Lambda functions themselves. This makes it easy to unit-test your functions, and makes them more portable if you&rsquo;re worried about vendor lock-in.</p>
+
 <h2 id="how-is-this-different-than-serverless">How is this different than Serverless?</h2>
 
 <p>Serverless uses CloudFormation to bootstrap resources, which can be great for getting started, but is generally less robust than <a href="https://www.terraform.io/">Terraform</a> for managing infrastructure throughout its lifetime. For this reason Apex does not currently provide resource management. This may change in the future for light bootstrapping, likely in an optional form.</p>
@@ -863,7 +867,7 @@ lowercase
 
 <p>Serverless aims to be provider agnostic, which can be both a pro and a con depending on the level of abstraction you&rsquo;re comfortable with, and if you desire to have a tool modelled closer to a single provider&rsquo;s capabilities. This similar to the contention around ORM vs &ldquo;raw&rdquo; queries.</p>
 
-<p>Serverless is written using Node.js, Apex is written in Go.</p>
+<p>Serverless is written using Node.js, Apex is written in Go. Apex aims to be a simple and robust solution, while Serverless intends on providing a more feature-rich solution, pick your poison.</p>
 
 <h2 id="is-using-the-node-js-shim-slow">Is using the Node.js shim slow?</h2>
 
