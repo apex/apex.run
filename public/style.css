@@ -181,12 +181,14 @@ body.background-4 #header-overlay {
 
 #menu:hover #menu-items {
   opacity: 1;
+  visibility: visible;
 }
 
 #menu-items {
   line-height: 1.7;
   opacity: 0;
   position: fixed;
+  visibility: hidden;
   margin: 0;
   padding: 20px;
   font-size: 12px;
