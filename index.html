@@ -812,6 +812,8 @@ lowercase
 }
 </code></pre>
 
+<p>Environment variables in json configuration must be strings.</p>
+
     
       <h1 id="omitting-files">Omitting files</h1>
       <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://git-scm.com/docs/gitignore#_pattern_format">.gitignore pattern format</a>; all patterns defined, are relative to function directories and not the project itself. By default both <code>.apexignore</code> and <code>function.json</code> are ignored.</p>
@@ -855,7 +857,7 @@ lowercase
 
 <h2 id="can-i-test-functions-locally">Can I test functions locally?</h2>
 
-<p>Currently there is no way to run functions locally, it would be a very large task to emulate the AWS. We recommend writing the bulk of your logic as libraries or packages native to your chosen language, using only thing connective layers in the Lambda functions themselves. This makes it easy to unit-test your functions, and makes them more portable if you&rsquo;re worried about vendor lock-in.</p>
+<p>Currently there is no way to run functions locally, it would be a very large task to emulate the AWS. We recommend writing the bulk of your logic as libraries or packages native to your chosen language, using only thin connective layers in the Lambda functions themselves. This makes it easy to unit-test your functions, and makes them more portable if you&rsquo;re worried about vendor lock-in.</p>
 
 <h2 id="how-is-this-different-than-serverless">How is this different than Serverless?</h2>
 
@@ -880,6 +882,12 @@ lowercase
 <h2 id="can-i-manage-functions-that-apex-did-not-create">Can I manage functions that Apex did not create?</h2>
 
 <p>Apex is not designed to handle legacy cases, or functions created by other software. For most operations Apex references the local functions, if it is not defined locally, then you cannot operate against it. This is by-design and is unlikely to change.</p>
+
+<h2 id="why-does-apex-use-apex-index-handle-when-environment-variables-are-used">Why does Apex use _apex_index.handle when environment variables are used?</h2>
+
+<p>Apex provides environment to runtimes by &ldquo;wrapping&rdquo; the existing user-defined handlers. For example in the Node.js case an <code>_apex_index.js</code> file is created in order to populate <code>process.env</code> before requiring the original such as <code>index.js</code>.</p>
+
+<p>To get a better understanding of how this works take a look at the <a href="https://github.com/apex/apex/blob/master/plugins/nodejs/nodejs.go#L26">Node.js plugin implementation</a>.</p>
 
     
       <h1 id="links">Links</h1>
