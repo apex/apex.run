@@ -598,16 +598,16 @@ $ apex rollback --dry-run uppercase 1
       <h1 id="function-hooks">Function hooks</h1>
       <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
 
-<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s directory, not the project&rsquo;s directory.</p>
+<p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s directory, not the project&rsquo;s directory. If a hook exits &gt; 0 then Apex will halt and display the error.</p>
 
 <p>Internally Apex uses these hooks to implement out-of-the-box support for Golang and other compiled languages.</p>
 
 <h2 id="supported-hooks">Supported hooks</h2>
 
 <ul>
-<li><code>build</code> run during a build (useful for compiling)</li>
-<li><code>deploy</code> run before a deploy (useful for testing, linting)</li>
-<li><code>clean</code> run after a deploy (useful for cleaning up build artifacts)</li>
+<li><code>build</code> run before a function zip is built (use this to compile binaries or transform source)</li>
+<li><code>deploy</code> run before a function is deployed (useful for testing, linting)</li>
+<li><code>clean</code> run after a function is deployed (useful for cleaning up build artifacts)</li>
 </ul>
 
 <h2 id="examples">Examples</h2>
