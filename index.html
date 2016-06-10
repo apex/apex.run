@@ -883,7 +883,7 @@ lowercase
 
 <p>Apex is not designed to handle legacy cases, or functions created by other software. For most operations Apex references the local functions, if it is not defined locally, then you cannot operate against it. This is by-design and is unlikely to change.</p>
 
-<h2 id="why-does-apex-use-apex-index-handle-when-environment-variables-are-used">Why does Apex use _apex_index.handle when environment variables are used?</h2>
+<h2 id="what-is-apex-index-handle">What is _apex_index.handle?</h2>
 
 <p>Apex provides environment to runtimes by &ldquo;wrapping&rdquo; the existing user-defined handlers. For example in the Node.js case an <code>_apex_index.js</code> file is created in order to populate <code>process.env</code> before requiring the original such as <code>index.js</code>.</p>
 
