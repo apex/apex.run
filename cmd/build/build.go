@@ -60,6 +60,7 @@ type page struct {
 var pages = []page{
 	{"Installation", "installation.md"},
 	{"AWS credentials", "aws-credentials.md"},
+	{"Getting started", "getting-started.md"},
 	{"Autocomplete", "autocomplete.md"},
 	{"Structuring projects", "projects.md"},
 	{"Structuring functions", "functions.md"},
