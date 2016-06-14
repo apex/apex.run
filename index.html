@@ -201,6 +201,21 @@ functions
     └── index.js
 </code></pre>
 
+<p>If you prefer your &ldquo;dev&rdquo; or &ldquo;staging&rdquo; environment to be the implied default then leave the files as project.json and function.json:</p>
+
+<pre><code>project.json
+project.prod.json
+functions
+├── bar
+│   ├── function.json
+│   ├── function.prod.json
+│   └── index.js
+└── foo
+    ├── function.json
+    ├── function.prod.json
+    └── index.js
+</code></pre>
+
 <h2 id="symlinks">Symlinks</h2>
 
 <p>It&rsquo;s important to note that Apex supports symlinked files and directories. Apex will read the links and pull in these files, even if the links aren&rsquo;t to files within your function. This enables the use of <code>npm link</code>, shared configuration and so on.</p>
@@ -873,23 +888,27 @@ lowercase
 
     
       <h1 id="environment-variables">Environment variables</h1>
-      <p>AWS Lambda does not support environment variables out of the box, so this is a feature provided by Apex.</p>
+      <p>AWS Lambda does not support environment variables out of the box, so this is a feature provided by Apex. There are several ways to set these variables, let&rsquo;s take a look!</p>
+
+<h2 id="flag-set">Flag &ndash;set</h2>
 
 <p>The <code>-s, --set</code> flag allows you to set environment variables which are exposed to the function at runtime. For example in Node.js using <code>process.env.NAME</code> or in Go using <code>os.Getenv(&quot;NAME&quot;)</code>. Behind the scenes this generates a <code>.env.json</code> file which is injected into your function&rsquo;s zip file upon deploy. You may use this flag multiple times.</p>
-
-<h2 id="examples">Examples</h2>
 
 <p>For example suppose you had a Loggly log collector and it needs an API token, you might deploy with:</p>
 
 <pre><code>$ apex deploy -s LOGGLY_TOKEN=token log-collector
 </code></pre>
 
-<p>Or suppose you have multiple functions using the GitHub API, you may want to expose a token to all of them:</p>
+<h2 id="flag-env-file">Flag &ndash;env-file</h2>
 
-<pre><code>$ apex deploy -s GITHUB_TOKEN=token
+<p>The <code>-E, --env-file</code> flag allows you to set multiple environment variables using a JSON file.</p>
+
+<pre><code>$ apex deploy --env-file /path/to/env.json
 </code></pre>
 
-<p>Specify environment variables in project.json or function.json:</p>
+<h2 id="json-config">JSON config</h2>
+
+<p>Specify environment variables in project.json or function.json, note that the values <em>must</em> be strings.</p>
 
 <pre><code class="language-json">{
   &quot;environment&quot;: {
@@ -898,7 +917,15 @@ lowercase
 }
 </code></pre>
 
-<p>Environment variables in json configuration must be strings.</p>
+<h2 id="precedence">Precedence</h2>
+
+<p>The precedence is currently as follows:</p>
+
+<ul>
+<li><code>-s, --set</code> flag values</li>
+<li><code>-E, --env-file</code> file values</li>
+<li>environment variables specified in project.json or function.json</li>
+</ul>
 
     
       <h1 id="omitting-files">Omitting files</h1>
