@@ -55,6 +55,8 @@
           
             <li><a href="#viewing-metrics">Viewing metrics</a></li>
           
+            <li><a href="#managing-infrastructure">Managing infrastructure</a></li>
+          
             <li><a href="#previewing-with-dry-run">Previewing with dry-run</a></li>
           
             <li><a href="#environment-variables">Environment variables</a></li>
@@ -129,6 +131,26 @@
 <pre><code>$ apex --profile myapp-prod deploy
 </code></pre>
 
+<h2 id="via-project-configuration">Via project configuration</h2>
+
+<p>You may store the profile name in the project.json file itself as shown in the following snippet. This is ideal since it ensures that you do not accidentally have a different environment set.</p>
+
+<pre><code class="language-json">{
+  &quot;project&quot;: &quot;myapp-prod&quot;
+}
+</code></pre>
+
+<h2 id="precedence">Precedence</h2>
+
+<p>Precedence for loading the AWS credentials is:</p>
+
+<ul>
+<li>profile from flag</li>
+<li>profile from JSON config</li>
+<li>profile from env variables</li>
+<li>profile named &ldquo;default&rdquo;</li>
+</ul>
+
     
       <h1 id="autocomplete">Autocomplete</h1>
       <p>Apex supports command and function name autocompletion. To enable this functionality you&rsquo;ll need to add the following shell script to your profile or similar:</p>
@@ -151,7 +173,7 @@ all <code>apex(1)</code> operations have access to these functions.</p>
 
 <h2 id="configuration">Configuration</h2>
 
-<p>Projects must have a project.json file in the root directory. This file contains details about your project, as well as
+<p>Projects have a project.json file in the root directory. This file contains details about your project, as well as
 defaults for functions, if desired. Here&rsquo;s an example of a project.json file declaring a default AWS IAM &ldquo;role&rdquo; and &ldquo;memory&rdquo; for all functions.</p>
 
 <pre><code class="language-json">{
@@ -160,6 +182,23 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
   &quot;role&quot;: &quot;arn:aws:iam::293503197324:role/lambda&quot;,
   &quot;memory&quot;: 512
 }
+</code></pre>
+
+<h2 id="multiple-environments">Multiple Environments</h2>
+
+<p>Multiple environments are supported with the &ndash;env flag. By default project.json and function.json are used, however when &ndash;env is specified project.ENV.json and function.ENV.json will be used. For example your directory structure may look something like the following:</p>
+
+<pre><code>project.stage.json
+project.prod.json
+functions
+├── bar
+│   ├── function.stage.json
+│   ├── function.prod.json
+│   └── index.js
+└── foo
+    ├── function.stage.json
+    ├── function.prod.json
+    └── index.js
 </code></pre>
 
 <h2 id="symlinks">Symlinks</h2>
@@ -212,6 +251,14 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 <h3 id="role">role</h3>
 
 <p>Default role of function(s) unless specified in their function.json configuration.</p>
+
+<ul>
+<li>type: <code>string</code></li>
+</ul>
+
+<h3 id="profile">profile</h3>
+
+<p>Name of the AWS profile to use, this is the name used to locate AWS credentials in ~/.aws/credentials. Use this if you&rsquo;d prefer not to specify <code>AWS_PROFILE</code> or <code>--profile</code>.</p>
 
 <ul>
 <li>type: <code>string</code></li>
@@ -706,6 +753,45 @@ lowercase
   error: 5
 
 </code></pre>
+
+    
+      <h1 id="managing-infrastructure">Managing infrastructure</h1>
+      <p>Apex is integrated with <a href="https://www.terraform.io/">Terraform</a> to provide infrastructure management. Apex currently only manages Lambda functions, so you&rsquo;ll likely want to use Terraform or CloudFormation to manage additional resources such as Lambda sources.</p>
+
+<h2 id="managing-infrastructure">Managing infrastructure</h2>
+
+<p>The <code>apex infra</code> command is effectively a wrapper around the <code>terraform</code> command. Apex provides several variables and helps provide structure for multiple Terraform environments.</p>
+
+<p>Each environment such as &ldquo;prod&rdquo; or &ldquo;stage&rdquo; lives in the ./infrastructure directory. For reference it may look something like:</p>
+
+<pre><code>infrastructure/
+├── prod
+│   └── main.tf
+├── stage
+│   └── main.tf
+</code></pre>
+
+<p>For example For example <code>apex infra --env prod plan</code> is effectively equivalent to the following command, with many <code>-var</code>&rsquo;s passed to expose information from Apex.</p>
+
+<pre><code>$ cd infrastructure/prod &amp;&amp; terraform plan
+</code></pre>
+
+<p>The environment is specified via the <code>--env</code> flag, or by default falls back on the <code>defaultEnvironment</code> property of project.json.</p>
+
+<h2 id="terraform-variables">Terraform variables</h2>
+
+<p>Currently the following variables are exposed to Terraform:</p>
+
+<ul>
+<li><code>aws_region</code> the AWS region name such as &ldquo;us-west-2&rdquo;</li>
+<li><code>apex_environment</code> the environment name such as &ldquo;prod&rdquo; or &ldquo;stage&rdquo;</li>
+<li><code>apex_function_role</code> the Lambda role ARN</li>
+<li><code>apex_function_NAME</code> Lambda function ARNs by <strong>NAME</strong></li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+
+<p>You&rsquo;ll typically need to assign <code>$(apex_function_myfunction):current</code> to specify that the &ldquo;current&rdquo; alias is referenced.</p>
 
     
       <h1 id="previewing-with-dry-run">Previewing with dry-run</h1>
