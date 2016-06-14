@@ -31,6 +31,8 @@
           
             <li><a href="#aws-credentials">AWS credentials</a></li>
           
+            <li><a href="#getting-started">Getting started</a></li>
+          
             <li><a href="#autocomplete">Autocomplete</a></li>
           
             <li><a href="#structuring-projects">Structuring projects</a></li>
@@ -150,6 +152,51 @@
 <li>profile from env variables</li>
 <li>profile named &ldquo;default&rdquo;</li>
 </ul>
+
+    
+      <h1 id="getting-started">Getting started</h1>
+      <p>Apex can help initialize a basic project to get you started. First specify you AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
+
+<pre><code>$ export AWS_PROFILE=sloths-stage
+$ apex init
+</code></pre>
+
+<p>You&rsquo;ll be presented with a few prompts, the project&rsquo;s default Lambda IAM role &amp; policy will be created, then you&rsquo;re ready to go!</p>
+
+<pre><code>             _    ____  _______  __
+            / \  |  _ \| ____\ \/ /
+           / _ \ | |_) |  _|  \  /
+          / ___ \|  __/| |___ /  \
+         /_/   \_\_|   |_____/_/\_\
+
+
+
+  Enter the name of your project. It should be machine-friendly, as this
+  is used to prefix your functions in Lambda.
+
+    Project name: sloths
+
+  Enter an optional description of your project.
+
+    Project description: My slothy project
+
+  [+] creating IAM sloth_lambda_function role
+  [+] creating IAM sloth_lambda_logs policy
+  [+] attaching policy to lambda_function role.
+  [+] creating ./project.json
+  [+] creating ./functions
+
+  Setup complete, deploy those functions!
+
+    $ apex deploy
+
+</code></pre>
+
+<p>Now try invoking the sample function:</p>
+
+<pre><code>$ apex invoke hello
+{&quot;hello&quot;:&quot;world&quot;}
+</code></pre>
 
     
       <h1 id="autocomplete">Autocomplete</h1>
