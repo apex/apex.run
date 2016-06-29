@@ -433,6 +433,16 @@ functions
 <li>inherited</li>
 </ul>
 
+<h3 id="handler">handler</h3>
+
+<p>Event handler name, this is the function invoked for a given event. Defaults are:</p>
+
+<ul>
+<li>nodejs: <code>index.handle</code> (index.js file with <code>handle</code> exported function)</li>
+<li>python: <code>handle</code></li>
+<li>java: <code>lambda.Main::handler</code></li>
+</ul>
+
 <h3 id="memory">memory</h3>
 
 <p>Memory allocated to the function, in megabytes.</p>
@@ -622,7 +632,7 @@ REPORT RequestId: 30f51e67-a6b5-11e5-8929-f53378ef0f47	Duration: 0.22 ms	Billed 
     timeout: 5s
     role: arn:aws:iam::293503197324:role/lambda
     handler: index.handle
-    current version: 3
+    aliases: current@v3, foo@v4
 
   foo
     runtime: nodejs
@@ -630,7 +640,7 @@ REPORT RequestId: 30f51e67-a6b5-11e5-8929-f53378ef0f47	Duration: 0.22 ms	Billed 
     timeout: 10s
     role: arn:aws:iam::293503197324:role/lambda
     handler: index.handle
-    current version: 12
+    aliases: current@v12
 </code></pre>
 
 <p>Terraform vars output:</p>
