@@ -234,7 +234,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h2 id="multiple-environments">Multiple Environments</h2>
 
-<p>Multiple environments are supported with the &ndash;env flag. By default project.json and function.json are used, however when &ndash;env is specified project.ENV.json and function.ENV.json will be used. For example your directory structure may look something like the following:</p>
+<p>Multiple environments are supported with the &ndash;env flag. By default project.json and function.json are used, however when &ndash;env is specified project.ENV.json and function.ENV.json will be used, falling back on function.json for cases when staging and production config is the same. For example your directory structure may look something like the following:</p>
 
 <pre><code>project.stage.json
 project.prod.json
@@ -455,7 +455,7 @@ functions
 
 <h3 id="timeout">timeout</h3>
 
-<p>Function timeout in sections.</p>
+<p>Function timeout in seconds.</p>
 
 <ul>
 <li>type: <code>int</code></li>
