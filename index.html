@@ -123,6 +123,9 @@ alternatively chown <code>/usr/local</code>:</p>
 <li><code>AWS_REGION</code> AWS region</li>
 </ul>
 
+<p>If you have multiple AWS projects you may want to consider using a tool such as <a href="http://direnv.net/">direnv</a> to localize and automatically set the variables when
+you&rsquo;re working on a project.</p>
+
 <h2 id="via-aws-files">Via ~/.aws files</h2>
 
 <p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <code>AWS_PROFILE</code> to tell apex which one to reference. However, if you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with the <code>AWS_REGION</code> environment variable. To read more on configuring these files view <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
