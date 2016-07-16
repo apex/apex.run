@@ -127,6 +127,20 @@ alternatively chown <code>/usr/local</code>:</p>
 
 <p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <code>AWS_PROFILE</code> to tell apex which one to reference. However, if you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with the <code>AWS_REGION</code> environment variable. To read more on configuring these files view <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
 
+<p>Here&rsquo;s an example of ~/.aws/credentials:</p>
+
+<pre><code>[example]
+aws_access_key_id = xxxxxxxx
+aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxx
+</code></pre>
+
+<p>Here&rsquo;s an example of ~/.aws/config:</p>
+
+<pre><code>[profile example]
+output = json
+region = us-west-2
+</code></pre>
+
 <h2 id="via-profile-flag">Via profile flag</h2>
 
 <p>If you have both ~/.aws/credentials and ~/.aws/config you may specify the profile directly with <code>apex --profile &lt;name&gt;</code> when issuing commands. This means you do not have to specify any environment variables, however you must provide it with each operation:</p>
@@ -156,7 +170,7 @@ alternatively chown <code>/usr/local</code>:</p>
 
     
       <h1 id="getting-started">Getting started</h1>
-      <p>Apex can help initialize a basic project to get you started. First specify you AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
+      <p>Apex can help initialize a basic project to get you started. First specify your AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
 
 <pre><code>$ export AWS_PROFILE=sloths-stage
 $ apex init
