@@ -7,6 +7,14 @@ body {
   margin: 0;
 }
 
+#opencollective-banner h1 {
+  display: none;
+}
+
+#opencollective-banner {
+  margin: 50px 0 200px 0;
+}
+
 #header-overlay {
   background: #131313 50% 100% no-repeat;
   background-size: cover;
