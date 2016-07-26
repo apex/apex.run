@@ -118,8 +118,8 @@ alternatively chown <code>/usr/local</code>:</p>
 <p>Using environment variables only, you must specify the following:</p>
 
 <ul>
-<li><code>AWS_ACCESS_KEY</code> AWS account access key</li>
-<li><code>AWS_SECRET_KEY</code> AWS account secret key</li>
+<li><code>AWS_ACCESS_KEY_ID</code> AWS account access key</li>
+<li><code>AWS_SECRET_ACCESS_KEY</code> AWS account secret key</li>
 <li><code>AWS_REGION</code> AWS region</li>
 </ul>
 
@@ -472,7 +472,7 @@ functions
 
 <h3 id="timeout">timeout</h3>
 
-<p>Function timeout in seconds.</p>
+<p>Function timeout in seconds. Note that Lambda currently restricts durations to 5 minutes (300s).</p>
 
 <ul>
 <li>type: <code>int</code></li>
