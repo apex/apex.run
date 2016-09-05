@@ -96,10 +96,14 @@
     </p>
     
       <h1 id="installation">Installation</h1>
-      <p>On macOS, Linux, or OpenBSD run the following, note that you may need to <code>sudo</code>, or
-alternatively chown <code>/usr/local</code>:</p>
+      <p>On macOS, Linux, or OpenBSD run the following:</p>
 
 <pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
+</code></pre>
+
+<p>Note that you may need to run the <code>sudo</code> version below, or alternatively chown <code>/usr/local</code>:</p>
+
+<pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sudo sh
 </code></pre>
 
 <p>On Windows download <a href="https://github.com/apex/apex/releases">binary</a>.</p>
@@ -871,7 +875,7 @@ lowercase
 │   └── main.tf
 </code></pre>
 
-<p>For example For example <code>apex infra --env prod plan</code> is effectively equivalent to the following command, with many <code>-var</code>&rsquo;s passed to expose information from Apex.</p>
+<p>For example <code>apex infra --env prod plan</code> is effectively equivalent to the following command, with many <code>-var</code>&rsquo;s passed to expose information from Apex.</p>
 
 <pre><code>$ cd infrastructure/prod &amp;&amp; terraform plan
 </code></pre>
