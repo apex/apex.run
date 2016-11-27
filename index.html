@@ -77,6 +77,7 @@
           
           <li><a href="https://github.com/apex/apex/tree/master/_examples">Examples</a></li>
           <li><a href="https://github.com/apex/apex">GitHub</a></li>
+          <li><a href="https://twitter.com/apexserverless">Twitter</a></li>
           <li><a href="https://medium.com/apex-serverless">Medium</a></li>
         </ul>
       </div>
@@ -1031,7 +1032,14 @@ lowercase
 <pre><code>$ apex deploy --env-file /path/to/env.json
 </code></pre>
 
-<h2 id="json-config">JSON config</h2>
+<p>Sample env.json:</p>
+
+<pre><code class="language-json">{
+  &quot;LOGGLY_TOKEN&quot;: &quot;12314212213123&quot;
+}
+</code></pre>
+
+<h2 id="config-project-json-or-function-json">Config (project.json or function.json)</h2>
 
 <p>Specify environment variables in project.json or function.json, note that the values <em>must</em> be strings.</p>
 
