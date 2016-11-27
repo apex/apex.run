@@ -175,6 +175,40 @@ region = us-west-2
 <li>profile named &ldquo;default&rdquo;</li>
 </ul>
 
+<h2 id="minimum-iam-policy">Minimum IAM Policy</h2>
+
+<p>Below is a policy for AWS <a href="http://aws.amazon.com/iam/">Identity and Access Management</a> which provides the minimum privileges needed to use Apex to manage your Lambda functions.</p>
+
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Action&quot;: [
+        &quot;iam:CreateRole&quot;,
+        &quot;iam:CreatePolicy&quot;,
+        &quot;iam:AttachRolePolicy&quot;,
+        &quot;iam:PassRole&quot;,
+        &quot;lambda:GetFunction&quot;,
+        &quot;lambda:CreateFunction&quot;,
+        &quot;lambda:DeleteFunction&quot;,
+        &quot;lambda:InvokeFunction&quot;,
+        &quot;lambda:GetFunctionConfiguration&quot;,
+        &quot;lambda:UpdateFunctionConfiguration&quot;,
+        &quot;lambda:UpdateFunctionCode&quot;,
+        &quot;lambda:CreateAlias&quot;,
+        &quot;lambda:UpdateAlias&quot;,
+        &quot;lambda:GetAlias&quot;,
+        &quot;lambda:ListVersionsByFunction&quot;,
+        &quot;logs:FilterLogEvents&quot;,
+        &quot;cloudwatch:GetMetricStatistics&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;*&quot;
+    }
+  ]
+}
+</code></pre>
+
     
       <h1 id="getting-started">Getting started</h1>
       <p>Apex can help initialize a basic project to get you started. First specify your AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
@@ -580,7 +614,7 @@ $ apex deploy auth api
 
     
       <h1 id="invoking-functions">Invoking functions</h1>
-      <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN.</p>
+      <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN. It&rsquo;s important to note that <code>invoke</code> will execute the remote Lambda function and not locally execute your function. It will execute the $LATEST Lambda function available.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -895,7 +929,10 @@ lowercase
 
 <h2 id="notes">Notes</h2>
 
-<p>You&rsquo;ll typically need to assign <code>$(apex_function_myfunction):current</code> to specify that the &ldquo;current&rdquo; alias is referenced.</p>
+<ul>
+<li>You&rsquo;ll typically need to assign <code>${apex_function_myfunction}:current</code> to specify that the &ldquo;current&rdquo; alias is referenced.</li>
+<li>The <code>apex_function_NAME</code> variables are not available until the functions have been deployed (via <code>apex deploy</code>) at least once.</li>
+</ul>
 
     
       <h1 id="previewing-with-dry-run">Previewing with dry-run</h1>
@@ -977,11 +1014,11 @@ lowercase
 
     
       <h1 id="environment-variables">Environment variables</h1>
-      <p>AWS Lambda does not support environment variables out of the box, so this is a feature provided by Apex. There are several ways to set these variables, let&rsquo;s take a look!</p>
+      <p>Apex now supports the new native AWS Lambda environment variables, which are encrypted via KMS. There are several ways to set these variables, let&rsquo;s take a look!</p>
 
 <h2 id="flag-set">Flag &ndash;set</h2>
 
-<p>The <code>-s, --set</code> flag allows you to set environment variables which are exposed to the function at runtime. For example in Node.js using <code>process.env.NAME</code> or in Go using <code>os.Getenv(&quot;NAME&quot;)</code>. Behind the scenes this generates a <code>.env.json</code> file which is injected into your function&rsquo;s zip file upon deploy. You may use this flag multiple times.</p>
+<p>The <code>-s, --set</code> flag allows you to set environment variables which are exposed to the function at runtime. For example in Node.js using <code>process.env.NAME</code> or in Go using <code>os.Getenv(&quot;NAME&quot;)</code>. You may use this flag multiple times.</p>
 
 <p>For example suppose you had a Loggly log collector and it needs an API token, you might deploy with:</p>
 
@@ -1084,12 +1121,6 @@ lowercase
 <h2 id="can-i-manage-functions-that-apex-did-not-create">Can I manage functions that Apex did not create?</h2>
 
 <p>Apex is not designed to handle legacy cases, or functions created by other software. For most operations Apex references the local functions, if it is not defined locally, then you cannot operate against it. This is by-design and is unlikely to change.</p>
-
-<h2 id="what-is-apex-index-handle">What is _apex_index.handle?</h2>
-
-<p>Apex provides environment to runtimes by &ldquo;wrapping&rdquo; the existing user-defined handlers. For example in the Node.js case an <code>_apex_index.js</code> file is created in order to populate <code>process.env</code> before requiring the original such as <code>index.js</code>.</p>
-
-<p>To get a better understanding of how this works take a look at the <a href="https://github.com/apex/apex/blob/master/plugins/nodejs/nodejs.go#L26">Node.js plugin implementation</a>.</p>
 
     
       <h1 id="links">Links</h1>
