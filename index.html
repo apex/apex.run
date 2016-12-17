@@ -209,6 +209,28 @@ region = us-west-2
 }
 </code></pre>
 
+<h3 id="additional-minimum-iam-policy-to-set-vpc-for-lambda">Additional minimum IAM Policy to set VPC for Lambda</h3>
+
+<p>The following additional policies are needed to set VPC for your Lambda functions.</p>
+
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Action&quot;: [
+        &quot;ec2:DescribeSecurityGroups&quot;,
+        &quot;ec2:DescribeSubnets&quot;,
+        &quot;ec2:DescribeVpcs&quot;
+      ],
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Resource&quot;: &quot;*&quot;
+    }
+  ]
+}
+</code></pre>
+
+<p>Also, the role which apex made during <code>apex init</code> should have the <code>AWSLambdaVPCAccessExecutionRole</code> policy, see details in <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html">an AWS document</a>.</p>
+
     
       <h1 id="getting-started">Getting started</h1>
       <p>Apex can help initialize a basic project to get you started. First specify your AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
