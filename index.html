@@ -164,6 +164,10 @@ region = us-west-2
 }
 </code></pre>
 
+<p>## Via IAM Role</p>
+
+<p>Using an IAM role can be achieved in two ways, via the <strong>AWS_ROLE</strong> environment variable or via a command line flag <code>--iamrole</code>. As with other Apex credential loading, the command line flag will supersede the environment variable.</p>
+
 <h2 id="precedence">Precedence</h2>
 
 <p>Precedence for loading the AWS credentials is:</p>
@@ -380,7 +384,13 @@ functions
 <li><strong>nodejs</strong> (Node.js 0.10)</li>
 <li><strong>nodejs4.3</strong> (Node.js 4.3)</li>
 <li><strong>golang</strong> (any version)</li>
+<li><strong>rust-musl[^rust-runtime][^rust-linux-only]</strong> (any version)</li>
+<li><strong>rust-gnu[^rust-runtime][^rust-linux-only]</strong> (any version)</li>
 </ul>
+
+<p>[^rust-runtime]: Rust has two types of libc dependencies and the <strong>rust-musl</strong> is recommended. Your rust lambda function may refuse to run because of glibc version mismatch between lambda server and your pc when <strong>rust-gnu</strong> runtime is used.</p>
+
+<p>[^rust-linux-only]: Rust version of lambda currently can only be built on linux machine. If you try to build on MacOS, you will encounter the linker error. One solution is using apex inside a linux docker container on MacOS.</p>
 
 <h3 id="memory">memory</h3>
 
@@ -947,6 +957,7 @@ lowercase
 <li><code>apex_environment</code> the environment name such as &ldquo;prod&rdquo; or &ldquo;stage&rdquo;</li>
 <li><code>apex_function_role</code> the Lambda role ARN</li>
 <li><code>apex_function_NAME</code> Lambda function ARNs by <strong>NAME</strong></li>
+<li><code>apex_function_NAME_name</code> Lambda function names by <strong>NAME</strong></li>
 </ul>
 
 <h2 id="notes">Notes</h2>
@@ -1141,7 +1152,7 @@ lowercase
 
 <h2 id="is-using-the-node-js-shim-slow">Is using the Node.js shim slow?</h2>
 
-<p>The shim creates a child process, thus creates a few-hundred millisecond delay for the first invocation. Subsequent calls to a function are likely to hit an active container, unless the function sees very little traffic.</p>
+<p>The shim creates a child process, thus creates a few-hundred millisecond delay for the first invocation. Subsequent calls to a function are likely to hit an active container, unless the function sees very little traffic, after which the latency is roughly 0.5ms.</p>
 
 <h2 id="do-shimmed-languages-have-any-limitations">Do shimmed languages have any limitations?</h2>
 
