@@ -70,6 +70,7 @@ var pages = []page{
 	{"Deleting functions", "delete.md"},
 	{"Building functions", "build.md"},
 	{"Rolling back versions", "rollback.md"},
+	{"Aliasing versions", "alias.md"},
 	{"Function hooks", "hooks.md"},
 	{"Viewing log output", "logs.md"},
 	{"Viewing metrics", "metrics.md"},
