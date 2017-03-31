@@ -656,6 +656,12 @@ $ apex deploy auth api
 <pre><code class="language-sh">$ apex deploy *_reporter
 </code></pre>
 
+<p>Deploy an existing zip file.</p>
+
+<pre><code class="language-sh">$ apex build auth &gt; /tmp/auth.zip
+$ apex deploy auth --zip /tmp/auth.zip
+</code></pre>
+
     
       <h1 id="invoking-functions">Invoking functions</h1>
       <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN. It&rsquo;s important to note that <code>invoke</code> will execute the remote Lambda function and not locally execute your function. It will execute the $LATEST Lambda function available.</p>
