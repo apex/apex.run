@@ -7,6 +7,14 @@ body {
   margin: 0;
 }
 
+#jobs {
+  width: 700px;
+}
+
+#jobs img {
+  width: 100%;
+}
+
 #opencollective-banner h1 {
   display: none;
 }
