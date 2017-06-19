@@ -195,6 +195,7 @@ region = us-west-2
         &quot;iam:AttachRolePolicy&quot;,
         &quot;iam:PassRole&quot;,
         &quot;lambda:GetFunction&quot;,
+        &quot;lambda:ListFunctions&quot;,
         &quot;lambda:CreateFunction&quot;,
         &quot;lambda:DeleteFunction&quot;,
         &quot;lambda:InvokeFunction&quot;,
@@ -204,6 +205,7 @@ region = us-west-2
         &quot;lambda:CreateAlias&quot;,
         &quot;lambda:UpdateAlias&quot;,
         &quot;lambda:GetAlias&quot;,
+        &quot;lambda:ListAliases&quot;,
         &quot;lambda:ListVersionsByFunction&quot;,
         &quot;logs:FilterLogEvents&quot;,
         &quot;cloudwatch:GetMetricStatistics&quot;
@@ -317,7 +319,7 @@ defaults for functions, if desired. Here&rsquo;s an example of a project.json fi
 
 <h2 id="multiple-environments">Multiple Environments</h2>
 
-<p>Multiple environments are supported with the &ndash;env flag. By default project.json and function.json are used, however when &ndash;env is specified project.ENV.json and function.ENV.json will be used, falling back on function.json for cases when staging and production config is the same. For example your directory structure may look something like the following:</p>
+<p>Multiple environments are supported with the <code>--env</code> flag. By default project.json and function.json are used, however when <code>--env</code> is specified project.ENV.json and function.ENV.json will be used, falling back on function.json for cases when staging and production config is the same. For example your directory structure may look something like the following:</p>
 
 <pre><code>project.stage.json
 project.prod.json
@@ -382,9 +384,10 @@ functions
 
 <ul>
 <li><strong>java</strong> (Java 8)</li>
-<li><strong>python</strong> (Python 2.7)</li>
-<li><strong>nodejs</strong> (Node.js 0.10)</li>
+<li><strong>python2.7</strong> (Python 2.7)</li>
+<li><strong>python3.6</strong> (Python 3.6)</li>
 <li><strong>nodejs4.3</strong> (Node.js 4.3)</li>
+<li><strong>nodejs4.3-edge</strong> (Node.js 4.3 Edge)</li>
 <li><strong>nodejs6.10</strong> (Node.js 6.10)</li>
 <li><strong>golang</strong> (any version)</li>
 <li><strong>clojure</strong> (any version)</li>
@@ -662,6 +665,11 @@ $ apex deploy auth api
 $ apex deploy auth --zip /tmp/auth.zip
 </code></pre>
 
+<p>Deploy with an alias. The alias is added regardless of changes to the function and its config.</p>
+
+<pre><code class="language-sh">$ apex deploy --alias prod api
+</code></pre>
+
     
       <h1 id="invoking-functions">Invoking functions</h1>
       <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN. It&rsquo;s important to note that <code>invoke</code> will execute the remote Lambda function and not locally execute your function. It will execute the $LATEST Lambda function available.</p>
@@ -860,6 +868,11 @@ $ apex rollback --dry-run uppercase 1
 <pre><code>$ apex alias -v 10 stage myfunction
 </code></pre>
 
+<p>Alias specific function&rsquo;s alias &ldquo;dev&rdquo; to &ldquo;stage&rdquo; alias (promote dev to stage):</p>
+
+<pre><code>$ apex alias stage dev myfunction
+</code></pre>
+
     
       <h1 id="function-hooks">Function hooks</h1>
       <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
@@ -1005,8 +1018,8 @@ lowercase
 <li><code>aws_region</code> the AWS region name such as &ldquo;us-west-2&rdquo;</li>
 <li><code>apex_environment</code> the environment name such as &ldquo;prod&rdquo; or &ldquo;stage&rdquo;</li>
 <li><code>apex_function_role</code> the Lambda role ARN</li>
-<li><code>apex_function_NAME</code> Lambda function ARNs by <strong>NAME</strong></li>
-<li><code>apex_function_NAME_name</code> Lambda function names by <strong>NAME</strong></li>
+<li><code>apex_function_arns</code> A map of all lambda functions</li>
+<li><code>apex_function_names</code> A map of all the names of the lambda functions</li>
 </ul>
 
 <h2 id="notes">Notes</h2>
