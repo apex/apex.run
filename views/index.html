@@ -9,8 +9,10 @@
       logs, hooking into the build system and more.
     </p>
     {{range .Pages}}
-      <h1 id="{{.Name | slug}}">{{.Name}}</h1>
-      {{printf "%s/%s" $path .File | readfile | markdown | noescape}}
+      <article>
+        <h1 id="{{.Name | slug}}">{{.Name}}</h1>
+        {{printf "%s/%s" $path .File | readfile | markdown | noescape}}
+      </article>
     {{end}}
   {{template "footer"}}
 {{end}}
