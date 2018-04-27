@@ -97,16 +97,25 @@
       logs, hooking into the build system and more.
     </p>
     
-      <h1 id="installation">Installation</h1>
-      <p>On macOS, Linux, or OpenBSD run the following:</p>
+      <article>
+        <h1 id="installation">Installation</h1>
+        <p>On macOS, Linux, or OpenBSD run the following:</p>
 
 <pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
 </code></pre>
 
-<p>Note that you may need to run the <code>sudo</code> version below, or alternatively chown <code>/usr/local</code>:</p>
+<p>This command will install <code>apex</code> binary as <code>/usr/local/bin/apex</code> and
+you may need to run the <code>sudo</code> version below, or alternatively chown <code>/usr/local</code>:</p>
 
 <pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sudo sh
 </code></pre>
+
+<p>You can specify a destination as below</p>
+
+<pre><code>curl https://raw.githubusercontent.com/apex/apex/master/install.sh | DEST=$HOME/bin/apex sh
+</code></pre>
+
+<p>this command will install <code>apex</code> binary as <code>$HOME/bin/apex</code> and you may not need to use <code>sudo</code>.</p>
 
 <p>On Windows download <a href="https://github.com/apex/apex/releases">binary</a>.</p>
 
@@ -115,9 +124,11 @@
 <pre><code>apex upgrade
 </code></pre>
 
+      </article>
     
-      <h1 id="aws-credentials">AWS credentials</h1>
-      <p>Before using Apex you need to first give it your account credentials so that Apex can manage resources. There are a number of ways to do that, which are outlined here.</p>
+      <article>
+        <h1 id="aws-credentials">AWS credentials</h1>
+        <p>Before using Apex you need to first give it your account credentials so that Apex can manage resources. There are a number of ways to do that, which are outlined here.</p>
 
 <h2 id="via-environment-variables">Via environment variables</h2>
 
@@ -129,12 +140,12 @@
 <li><code>AWS_REGION</code> AWS region</li>
 </ul>
 
-<p>If you have multiple AWS projects you may want to consider using a tool such as <a href="http://direnv.net/">direnv</a> to localize and automatically set the variables when
+<p>If you have multiple AWS projects you may want to consider using a tool such as <a href="https://direnv.net/">direnv</a> to localize and automatically set the variables when
 you&rsquo;re working on a project.</p>
 
 <h2 id="via-aws-files">Via ~/.aws files</h2>
 
-<p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <code>AWS_PROFILE</code> to tell apex which one to reference. However, if you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with the <code>AWS_REGION</code> environment variable. To read more on configuring these files view <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
+<p>Using the ~/.aws/credentials and ~/.aws/config files you may specify <code>AWS_PROFILE</code> to tell apex which one to reference. However, if you do not have a ~/.aws/config file, or &ldquo;region&rdquo; is not defined, you should set it with the <code>AWS_REGION</code> environment variable. To read more on configuring these files view <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">Configuring the AWS CLI</a>.</p>
 
 <p>Here&rsquo;s an example of ~/.aws/credentials:</p>
 
@@ -183,7 +194,7 @@ region = us-west-2
 
 <h2 id="minimum-iam-policy">Minimum IAM Policy</h2>
 
-<p>Below is a policy for AWS <a href="http://aws.amazon.com/iam/">Identity and Access Management</a> which provides the minimum privileges needed to use Apex to manage your Lambda functions.</p>
+<p>Below is a policy for AWS <a href="https://aws.amazon.com/iam/">Identity and Access Management</a> which provides the minimum privileges needed to use Apex to manage your Lambda functions.</p>
 
 <pre><code class="language-json">{
   &quot;Version&quot;: &quot;2012-10-17&quot;,
@@ -237,11 +248,13 @@ region = us-west-2
 }
 </code></pre>
 
-<p>Also, the role which apex made during <code>apex init</code> should have the <code>AWSLambdaVPCAccessExecutionRole</code> policy, see details in <a href="http://docs.aws.amazon.com/lambda/latest/dg/vpc.html">an AWS document</a>.</p>
+<p>Also, the role which apex made during <code>apex init</code> should have the <code>AWSLambdaVPCAccessExecutionRole</code> policy, see details in <a href="https://docs.aws.amazon.com/lambda/latest/dg/vpc.html">an AWS document</a>.</p>
 
+      </article>
     
-      <h1 id="getting-started">Getting started</h1>
-      <p>Apex can help initialize a basic project to get you started. First specify your AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
+      <article>
+        <h1 id="getting-started">Getting started</h1>
+        <p>Apex can help initialize a basic project to get you started. First specify your AWS credentials as mentioned in the previous section, then run <code>apex init</code>:</p>
 
 <pre><code>$ export AWS_PROFILE=sloths-stage
 $ apex init
@@ -284,9 +297,11 @@ $ apex init
 {&quot;hello&quot;:&quot;world&quot;}
 </code></pre>
 
+      </article>
     
-      <h1 id="autocomplete">Autocomplete</h1>
-      <p>Apex supports command and function name autocompletion. To enable this functionality you&rsquo;ll need to add the following shell script to your profile or similar:</p>
+      <article>
+        <h1 id="autocomplete">Autocomplete</h1>
+        <p>Apex supports command and function name autocompletion. To enable this functionality you&rsquo;ll need to add the following shell script to your profile or similar:</p>
 
 <pre><code class="language-sh">_apex()  {
   COMPREPLY=()
@@ -299,9 +314,11 @@ $ apex init
 complete -F _apex apex
 </code></pre>
 
+      </article>
     
-      <h1 id="structuring-projects">Structuring projects</h1>
-      <p>A &ldquo;project&rdquo; is the largest unit of abstraction in Apex. A project consists of collection of AWS Lambda functions, and
+      <article>
+        <h1 id="structuring-projects">Structuring projects</h1>
+        <p>A &ldquo;project&rdquo; is the largest unit of abstraction in Apex. A project consists of collection of AWS Lambda functions, and
 all <code>apex(1)</code> operations have access to these functions.</p>
 
 <h2 id="configuration">Configuration</h2>
@@ -487,9 +504,11 @@ functions
 <li>type: <code>array</code></li>
 </ul>
 
+      </article>
     
-      <h1 id="structuring-functions">Structuring functions</h1>
-      <p>A function is the smallest unit in Apex. A function represents an AWS Lambda function.</p>
+      <article>
+        <h1 id="structuring-functions">Structuring functions</h1>
+        <p>A function is the smallest unit in Apex. A function represents an AWS Lambda function.</p>
 
 <p>Functions must include at least one source file (runtime dependent), such as index.js or main.go. Optionally a function.json file may be placed in the <em>function&rsquo;s directory</em>, specifying details such as the memory allocated or the AWS IAM role. If one or more functions is missing a function.json file you must provide defaults for the required fields in project.json (see &ldquo;Projects&rdquo; for an example).</p>
 
@@ -620,9 +639,11 @@ functions
 
 <p>Optional ARN of an Amazon SQS queue or Amazon SNS topic you specify as your Dead Letter Queue (DLQ).</p>
 
+      </article>
     
-      <h1 id="deploying-functions">Deploying functions</h1>
-      <p>To deploy one or more functions all you need to do is run <code>apex deploy</code>. Apex deploys are idempotent; a build is created
+      <article>
+        <h1 id="deploying-functions">Deploying functions</h1>
+        <p>To deploy one or more functions all you need to do is run <code>apex deploy</code>. Apex deploys are idempotent; a build is created
 for each function, and Apex performs a checksum to see if the deployed function matches the local build, if so
 it&rsquo;s not deployed.</p>
 
@@ -670,9 +691,11 @@ $ apex deploy auth --zip /tmp/auth.zip
 <pre><code class="language-sh">$ apex deploy --alias prod api
 </code></pre>
 
+      </article>
     
-      <h1 id="invoking-functions">Invoking functions</h1>
-      <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN. It&rsquo;s important to note that <code>invoke</code> will execute the remote Lambda function and not locally execute your function. It will execute the $LATEST Lambda function available.</p>
+      <article>
+        <h1 id="invoking-functions">Invoking functions</h1>
+        <p>Apex allows you to invoke functions from the command-line, optionally passing a JSON event or stream to STDIN. It&rsquo;s important to note that <code>invoke</code> will execute the remote Lambda function and not locally execute your function. It will execute the $LATEST Lambda function available.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -729,9 +752,11 @@ REPORT RequestId: 30f51e67-a6b5-11e5-8929-f53378ef0f47	Duration: 0.22 ms	Billed 
 ...
 </code></pre>
 
+      </article>
     
-      <h1 id="listing-functions">Listing functions</h1>
-      <p>Apex supports listing of functions in various outputs, currently human-friendly terminal output and &ldquo;tfvars&rdquo; support for integration with Terraform.</p>
+      <article>
+        <h1 id="listing-functions">Listing functions</h1>
+        <p>Apex supports listing of functions in various outputs, currently human-friendly terminal output and &ldquo;tfvars&rdquo; support for integration with Terraform.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -763,9 +788,11 @@ apex_function_bar=&quot;arn:aws:lambda:us-west-2:293503197324:function:testing_b
 apex_function_foo=&quot;arn:aws:lambda:us-west-2:293503197324:function:testing_foo&quot;
 </code></pre>
 
+      </article>
     
-      <h1 id="deleting-functions">Deleting functions</h1>
-      <p>Apex allows you to delete functions, however it will prompt by default. Use the <code>-f, --force</code> flag to override this behaviour. You may pass zero or more function names.</p>
+      <article>
+        <h1 id="deleting-functions">Deleting functions</h1>
+        <p>Apex allows you to delete functions, however it will prompt by default. Use the <code>-f, --force</code> flag to override this behaviour. You may pass zero or more function names.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -780,12 +807,12 @@ The following will be deleted:
 Are you sure? (yes/no):
 </code></pre>
 
-<p>For delete of all functions:</p>
+<p>Force delete of all functions:</p>
 
 <pre><code class="language-sh">$ apex delete -f
 </code></pre>
 
-<p>For delete of specific functions:</p>
+<p>Force delete of specific functions:</p>
 
 <pre><code class="language-sh">$ apex delete -f foo bar
 </code></pre>
@@ -795,9 +822,11 @@ Are you sure? (yes/no):
 <pre><code class="language-sh">$ apex delete auth*
 </code></pre>
 
+      </article>
     
-      <h1 id="building-functions">Building functions</h1>
-      <p>Apex generates a zip file for you upon deploy, however sometimes it can be useful to see exactly what&rsquo;s included in this file for debugging purposes. The <code>apex build</code> command outputs the zip to STDOUT for this purpose.</p>
+      <article>
+        <h1 id="building-functions">Building functions</h1>
+        <p>Apex generates a zip file for you upon deploy, however sometimes it can be useful to see exactly what&rsquo;s included in this file for debugging purposes. The <code>apex build</code> command outputs the zip to STDOUT for this purpose.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -806,9 +835,11 @@ Are you sure? (yes/no):
 <pre><code class="language-sh">$ apex build foo &gt; out.zip
 </code></pre>
 
+      </article>
     
-      <h1 id="rolling-back-versions">Rolling back versions</h1>
-      <p>Apex allows you to roll back to the previous, or specified version of a function.</p>
+      <article>
+        <h1 id="rolling-back-versions">Rolling back versions</h1>
+        <p>Apex allows you to roll back to the previous, or specified version of a function.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -837,9 +868,11 @@ $ apex rollback --dry-run uppercase 1
  alias: current
 </code></pre>
 
+      </article>
     
-      <h1 id="aliasing-versions">Aliasing versions</h1>
-      <p>The <code>alias</code> command allows you to alias one or more function versions to a given alias.</p>
+      <article>
+        <h1 id="aliasing-versions">Aliasing versions</h1>
+        <p>The <code>alias</code> command allows you to alias one or more function versions to a given alias.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -873,9 +906,11 @@ $ apex rollback --dry-run uppercase 1
 <pre><code>$ apex alias stage dev myfunction
 </code></pre>
 
+      </article>
     
-      <h1 id="function-hooks">Function hooks</h1>
-      <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
+      <article>
+        <h1 id="function-hooks">Function hooks</h1>
+        <p>Apex supports the notion of hooks, which allow you to execute shell commands throughout a function&rsquo;s lifecycle. For example you may use these hooks to run tests or linting before a deploy, or to transpile source code using Babel, CoffeeScript, or similar.</p>
 
 <p>Hooks may be specified in project.json or function.json. Hooks are executed in the function&rsquo;s directory, not the project&rsquo;s directory. If a hook exits &gt; 0 then Apex will halt and display the error.</p>
 
@@ -901,9 +936,11 @@ $ apex rollback --dry-run uppercase 1
 }
 </code></pre>
 
+      </article>
     
-      <h1 id="viewing-log-output">Viewing log output</h1>
-      <p>Apex is integrated with CloudWatch Logs to view the output of functions. By default the logs for all functions will be displayed, unless one or more function names are passed to <code>apex logs</code>. You may also specify the duration of time in which the history is displayed (defaults to 5 minutes), as well as following and filtering results.</p>
+      <article>
+        <h1 id="viewing-log-output">Viewing log output</h1>
+        <p>Apex is integrated with CloudWatch Logs to view the output of functions. By default the logs for all functions will be displayed, unless one or more function names are passed to <code>apex logs</code>. You may also specify the duration of time in which the history is displayed (defaults to 5 minutes), as well as following and filtering results.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -944,9 +981,11 @@ $ apex logs -s 1h
 <pre><code class="language-sh">$ apex logs auth*
 </code></pre>
 
+      </article>
     
-      <h1 id="viewing-metrics">Viewing metrics</h1>
-      <p>The <code>apex metrics</code> command provides a quick glance at the overall metrics for your functions, displaying the number of invocations, total execution duration, throttling, and errors within a given time period.</p>
+      <article>
+        <h1 id="viewing-metrics">Viewing metrics</h1>
+        <p>The <code>apex metrics</code> command provides a quick glance at the overall metrics for your functions, displaying the number of invocations, total execution duration, throttling, and errors within a given time period.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -986,9 +1025,11 @@ lowercase
 
 </code></pre>
 
+      </article>
     
-      <h1 id="managing-infrastructure">Managing infrastructure</h1>
-      <p>Apex is integrated with <a href="https://www.terraform.io/">Terraform</a> to provide infrastructure management. Apex currently only manages Lambda functions, so you&rsquo;ll likely want to use Terraform or CloudFormation to manage additional resources such as Lambda sources.</p>
+      <article>
+        <h1 id="managing-infrastructure">Managing infrastructure</h1>
+        <p>Apex is integrated with <a href="https://www.terraform.io/">Terraform</a> to provide infrastructure management. Apex currently only manages Lambda functions, so you&rsquo;ll likely want to use Terraform or CloudFormation to manage additional resources such as Lambda sources.</p>
 
 <h2 id="managing-infrastructure">Managing infrastructure</h2>
 
@@ -1029,9 +1070,11 @@ lowercase
 <li>The <code>apex_function_NAME</code> variables are not available until the functions have been deployed (via <code>apex deploy</code>) at least once.</li>
 </ul>
 
+      </article>
     
-      <h1 id="previewing-with-dry-run">Previewing with dry-run</h1>
-      <p>Apex lets you perform a &ldquo;dry run&rdquo; of any operation with the <code>--dry-run</code> flag, and no destructive AWS changes will be made.</p>
+      <article>
+        <h1 id="previewing-with-dry-run">Previewing with dry-run</h1>
+        <p>Apex lets you perform a &ldquo;dry run&rdquo; of any operation with the <code>--dry-run</code> flag, and no destructive AWS changes will be made.</p>
 
 <h2 id="notation">Notation</h2>
 
@@ -1107,9 +1150,11 @@ lowercase
   - function testing_foo
 </code></pre>
 
+      </article>
     
-      <h1 id="environment-variables">Environment variables</h1>
-      <p>Apex now supports the new native AWS Lambda environment variables, which are encrypted via KMS. There are several ways to set these variables, let&rsquo;s take a look!</p>
+      <article>
+        <h1 id="environment-variables">Environment variables</h1>
+        <p>Apex now supports the new native AWS Lambda environment variables, which are encrypted via KMS. There are several ways to set these variables, let&rsquo;s take a look!</p>
 
 <h2 id="flag-set">Flag &ndash;set</h2>
 
@@ -1155,9 +1200,11 @@ lowercase
 <li>environment variables specified in project.json or function.json</li>
 </ul>
 
+      </article>
     
-      <h1 id="omitting-files">Omitting files</h1>
-      <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://git-scm.com/docs/gitignore#_pattern_format">.gitignore pattern format</a>; all patterns defined, are relative to function directories and not the project itself. By default both <code>.apexignore</code> and <code>function.json</code> are ignored.</p>
+      <article>
+        <h1 id="omitting-files">Omitting files</h1>
+        <p>Optional <code>.apexignore</code> files may be placed in the project&rsquo;s root, or within specific function directories. It uses <a href="https://git-scm.com/docs/gitignore#_pattern_format">.gitignore pattern format</a>; all patterns defined, are relative to function directories and not the project itself. By default both <code>.apexignore</code> and <code>function.json</code> are ignored.</p>
 
 <h2 id="example">Example</h2>
 
@@ -1166,13 +1213,17 @@ lowercase
 <pre><code>*.go
 </code></pre>
 
+      </article>
     
-      <h1 id="understanding-the-shim">Understanding the shim</h1>
-      <p>Apex uses a Node.js shim for non-native language support. This is a very small program which executes in a child process, and feeds Lambda input through STDIN, and program output through STDOUT. Because of this STDERR must be used for logging, not STDOUT.</p>
+      <article>
+        <h1 id="understanding-the-shim">Understanding the shim</h1>
+        <p>Apex uses a Node.js shim for non-native language support. This is a very small program which executes in a child process, and feeds Lambda input through STDIN, and program output through STDOUT. Because of this STDERR must be used for logging, not STDOUT.</p>
 
+      </article>
     
-      <h1 id="viewing-documentation">Viewing documentation</h1>
-      <p>The <code>apex docs</code> command lets you read this documentation from the command line. By default it is piped into the <code>less(1)</code> pager so that you can perform operations like scrolling or searching from the terminal.</p>
+      <article>
+        <h1 id="viewing-documentation">Viewing documentation</h1>
+        <p>The <code>apex docs</code> command lets you read this documentation from the command line. By default it is piped into the <code>less(1)</code> pager so that you can perform operations like scrolling or searching from the terminal.</p>
 
 <h2 id="tips">Tips</h2>
 
@@ -1184,13 +1235,17 @@ lowercase
 <li>Type <code>q</code> to exit</li>
 </ul>
 
+      </article>
     
-      <h1 id="upgrading-apex">Upgrading Apex</h1>
-      <p>The <code>apex upgrade</code> command will update your installation of <code>apex(1)</code> :).</p>
+      <article>
+        <h1 id="upgrading-apex">Upgrading Apex</h1>
+        <p>The <code>apex upgrade</code> command will update your installation of <code>apex(1)</code> :).</p>
 
+      </article>
     
-      <h1 id="faq">FAQ</h1>
-      <h2 id="how-do-you-manage-multiple-environments">How do you manage multiple environments?</h2>
+      <article>
+        <h1 id="faq">FAQ</h1>
+        <h2 id="how-do-you-manage-multiple-environments">How do you manage multiple environments?</h2>
 
 <p>It&rsquo;s highly recommended to create separate AWS accounts for staging and production environments. This provides complete isolation of resources, and allows you to easily provide granular access to environments as required. See <a href="#aws-credentials">AWS credentials</a> for supplying an account profile.</p>
 
@@ -1224,28 +1279,22 @@ lowercase
 
 <p>Apex is not designed to handle legacy cases, or functions created by other software. For most operations Apex references the local functions, if it is not defined locally, then you cannot operate against it. This is by-design and is unlikely to change.</p>
 
+      </article>
     
-      <h1 id="links">Links</h1>
-      <ul>
+      <article>
+        <h1 id="links">Links</h1>
+        <ul>
 <li><a href="https://github.com/apex/apex">GitHub</a> repository</li>
 <li><a href="https://medium.com/apex-serverless">Medium</a> blog</li>
 <li><a href="https://github.com/apex/apex/tree/master/_examples">Project examples</a> with source</li>
 <li><a href="https://github.com/apex/go-apex">Go</a> runtime package</li>
 <li><a href="https://github.com/apex/node-apex">Node</a> runtime package</li>
-<li><a href="https://apex-dev.azurewebsites.net/"><img src="https://apex-dev.azurewebsites.net/badge.svg" alt="Slack Status" /></a></li>
+<li><a href="https://chat.apex.sh/"><img src="https://chat.apex.sh/badge.svg" alt="Slack Status" /></a></li>
 </ul>
 
+      </article>
     
   
-
-    <h2>Jobs</h2>
-    <p>Looking for a career upgrade?</p>
-    <div id="jobs">
-      <a href="https://astro.netlify.com/automattic"><img src="https://astro.netlify.com/static/automattic.png"></a>
-      <a href="https://astro.netlify.com/segment"><img src="https://astro.netlify.com/static/segment.png"></a>
-      <a href="https://astro.netlify.com/auth0"><img src="https://astro.netlify.com/static/auth0.png"/></a>
-    </div>
-
     <script src="https://opencollective.com/apex/banner.js"></script>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
